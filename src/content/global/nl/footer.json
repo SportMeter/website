@@ -1,10 +1,10 @@
 {
-	"title": "Heb je vragen?<br/> Aarzel niet om contact met ons op te nemen!",
-	"copyright": "© 2024 Uw bedrijf",
-	"buttons": [
-		{
-			"text": "Neem contact op",
-			"url": "/contact"
-		}
-	]
+  "title": "Heb je vragen?<br/> Aarzel niet om contact met ons op te nemen!",
+  "copyright": "© 2024 Uw bedrijf",
+  "buttons": [
+    {
+      "text": "Neem contact op",
+      "url": "/contact"
+    }
+  ]
 }
