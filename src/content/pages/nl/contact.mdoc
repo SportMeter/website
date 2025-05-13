@@ -1,0 +1,27 @@
+---
+title: Contact
+type: informational
+lastUpdateDate: 2024-03-09
+hideTitle: false
+addPadding: false
+seo:
+  title: "Neem contact op met Your Company Studio: Verbind voor Innovatieve Weboplossingen"
+  description: "Neem contact op met Your Company Studio voor deskundige webdesign en SEO-diensten. Verbind met ons om uw project te bespreken en geavanceerde weboplossingen te verkennen."
+  author: Your Company
+---
+
+{% Container %}
+
+{% Contact
+  title="Neem contact op"
+  fields=[
+    {title: "Volledige naam", placeholder: "John Doe", required: true, type: "text"},
+    {title: "E-mail", placeholder: "contact@email.com", required: true, type: "email"},
+    {title: "Telefoon", placeholder: "+1 345-678", type: "tel"},
+    {title: "Gewenste beltijd", placeholder: "10:00 tot 16:00 uur", type: "text"},
+    {title: "Bericht", placeholder: "Schrijf hier uw bericht", type: "textarea", width: 2},
+    {title: "Verzenden", type: "submit", width: 2}
+  ]
+/%}
+
+{% /Container %}

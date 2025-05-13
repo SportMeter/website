@@ -1,0 +1,35 @@
+---
+title: Homepage
+subtitle: Homepage
+type: informational
+lastUpdateDate: 2024-03-09
+hideTitle: true
+addPadding: false
+seo:
+  title: Toonaangevend Webbureau voor Hoogwaardige Webdesign Oplossingen - Your Company Studio
+  description: Your Company Studio blinkt uit in het maken van snelle en gebruiksvriendelijke websites met een focus op esthetisch design en SEO-optimalisatie, voor een opvallende online aanwezigheid
+  author: Your Company
+---
+
+{% Hero
+   title="Wij brengen uw meest <b>majestueuze</b> visies tot leven."
+   subtitle="We zijn gespecialiseerd in oplossingen die resultaten opleveren voor uw bedrijf. <span class=\"text-neutral-400\">Neem contact met ons op voor een gratis consult.</span>"
+   buttons=[{title: "Neem contact op", href: "/contact", style: "button", icon: "iconamoon:arrow-top-right-1-thin"}] /%}
+
+{% Container %}
+
+{% Services
+   title="We benutten onze uitgebreide ervaring in design en technologie om <span class=\"text-neutral-400\">toonaangevende merken en uitzonderlijke digitale ervaringen te creëren.</span>"
+   services=[{title: "Branding", description: "We verbinden merk en UX, creëren consistente digitale identiteiten op alle kanalen met strategische begeleiding om een naadloze merkrepresentatie te garanderen.", icon: "/src/assets/pages/homepage/marketing-service.png"}, {title: "Digitale oplossingen", description: "We creëren gedenkwaardige producten voor bedrijven en consumenten, zorgen voor uitzonderlijke gebruikerservaringen en leveren complete designsystemen voor eenvoudige iteratie.", icon: "/src/assets/pages/homepage/socialmedia-service.png"}, {title: "Betaalde media", description: "We ontwerpen impactvolle advertentiecampagnes, zorgen voor uitzonderlijk bereik en betrokkenheid, en leveren uitgebreide strategieën voor een probleemloze uitvoering.", icon: "/src/assets/pages/homepage/paidmedia-service.png"}] /%}
+
+{% RecentWork
+   title="Recent Werk"
+   buttons=[{title: "Bekijk al ons werk", href: "/works", style: "button", icon: "iconamoon:arrow-top-right-1-thin"}] /%}
+
+{% Testimonial
+   testimonial="[Your Company] heeft een fantastische website voor ons gemaakt die al ons verkeer heeft omgezet in nieuwe leads. Hun werk heeft onze business enorm doen groeien!"
+   name="Jane Doe" /%}
+
+{% BlogLatest title="Van het Blog" /%}
+
+{% /Container %}
