@@ -35,7 +35,8 @@ const componentLocales: ComponentLocales = {
 	},
 };
 
-const l = componentLocales[currentLocale ?? defaultLocale];
+// Add a fallback to ensure 'l' is never undefined
+const l = componentLocales[currentLocale ?? defaultLocale] || componentLocales["en"];
 
 const { frontmatter } = Astro.props;
 ---
