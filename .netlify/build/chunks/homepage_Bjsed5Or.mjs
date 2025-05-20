@@ -1,0 +1,9 @@
+async function getMod() {
+						return import('./homepage_BgfjRJf6.mjs');
+					}
+					const collectedLinks = [];
+					const collectedStyles = ["canvas[data-astro-cid-zxqwhg62]{touch-action:none;cursor:pointer}video[data-astro-cid-zxqwhg62]{display:none}video[data-astro-cid-zxqwhg62]:fullscreen{display:block}.follower[data-astro-cid-zxqwhg62]{pointer-events:none;width:50px;height:50px;border-radius:50px;position:absolute}.follower[data-astro-cid-zxqwhg62]>svg[data-astro-cid-zxqwhg62]{position:absolute;transform:translate(-50%,-50%);top:50%;left:50%;color:#ffffff80}\n","@keyframes moveDown{0%{transform:translateY(0)}80%{transform:translateY(2px)}to{transform:translateY(0)}}.scroll-down-button[data-astro-cid-anhloy43]:hover div[data-astro-cid-anhloy43]{animation:moveDown .7s infinite}[data-astro-cid-anhloy43][data-hero-reveal]{opacity:0;filter:blur(3px)}\n",".container-base[data-astro-cid-4pugfasg]{padding-left:var(--base-padding-x);padding-right:var(--base-padding-x)}\n",".button-primary[data-astro-cid-d4sasgt5]{transition:color .2s}.button-primary[data-astro-cid-d4sasgt5]:hover{opacity:.85}.button-primary[data-astro-cid-d4sasgt5] [data-astro-cid-d4sasgt5][data-icon=\"iconamoon:arrow-top-right-1-thin\"]{transition:transform .2s}.button-primary[data-astro-cid-d4sasgt5]:hover [data-astro-cid-d4sasgt5][data-icon=\"iconamoon:arrow-top-right-1-thin\"]{transform:translate(3px,-3px)}\n"];
+					const collectedScripts = [{"props":{"src":"/_astro/Blob.astro_astro_type_script_index_0_lang.DBkltbLO.js","type":"module"},"children":""},{"props":{"src":"/_astro/Hero.astro_astro_type_script_index_0_lang.D7TIqd5B.js","type":"module"},"children":""}];
+					const defaultMod = { __astroPropagation: true, getMod, collectedLinks, collectedStyles, collectedScripts };
+
+export { defaultMod as default };
