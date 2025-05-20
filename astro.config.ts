@@ -11,16 +11,13 @@ import robotsTxt from "astro-robots-txt";
 import { defineConfig } from "astro/config";
 import { defaultLocale, locales, siteTitle, siteUrl } from "./site.config";
 
+import netlify from "@astrojs/netlify";
+
 // https://astro.build/config
 export default defineConfig({
   site: siteUrl,
   output: "hybrid",
-  adapter: cloudflare({
-    imageService: "compile",
-    experimental: {
-      manualChunks: ["sharp"],
-    },
-  }),
+  adapter: netlify(),
   compressHTML: true,
   i18n: {
     defaultLocale: defaultLocale,
@@ -49,7 +46,12 @@ export default defineConfig({
     markdoc(),
     keystatic(),
     robotsTxt({
-      policy: [{ userAgent: "*", allow: "/" }],
+      policy: [
+        {
+          userAgent: "*",
+          allow: "/",
+        },
+      ],
     }),
     AstroPWA({
       mode: import.meta.env.PROD ? "production" : "development",
@@ -84,3 +86,4 @@ export default defineConfig({
     }),
   ],
 });
+
