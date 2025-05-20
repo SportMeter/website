@@ -70,7 +70,7 @@ export default defineConfig({
         navigateFallback: "/",
         globPatterns: ["**/*.{css,js,html,svg,png,ico,txt}"],
         globIgnores: ["**/_worker.js/**/*", "_worker.js"],
-        navigateFallbackDenylist: [/^\/keystatic/, /^\/api/],
+        navigateFallbackDenylist: [/^\/api/],
         skipWaiting: true,
         maximumFileSizeToCacheInBytes: 3 * 1024 * 1024,
       },
