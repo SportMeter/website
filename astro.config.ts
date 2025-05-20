@@ -5,10 +5,11 @@ import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import keystatic from "@keystatic/astro";
+import AstroPWA from "@vite-pwa/astro";
 import icon from "astro-icon";
 import robotsTxt from "astro-robots-txt";
 import { defineConfig } from "astro/config";
-import { defaultLocale, locales, siteUrl } from "./site.config";
+import { defaultLocale, locales, siteTitle, siteUrl } from "./site.config";
 
 // https://astro.build/config
 export default defineConfig({
