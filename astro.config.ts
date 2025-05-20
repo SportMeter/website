@@ -14,6 +14,12 @@ import { defaultLocale, locales, siteUrl } from "./site.config";
 export default defineConfig({
   site: siteUrl,
   output: "hybrid",
+  adapter: cloudflare({
+    imageService: "compile",
+    experimental: {
+      manualChunks: ["sharp"],
+    },
+  }),
   compressHTML: true,
   i18n: {
     defaultLocale: defaultLocale,
@@ -43,6 +49,37 @@ export default defineConfig({
     keystatic(),
     robotsTxt({
       policy: [{ userAgent: "*", allow: "/" }],
+    }),
+    AstroPWA({
+      mode: import.meta.env.PROD ? "production" : "development",
+      base: "/",
+      scope: "/",
+      includeAssets: ["favicon.svg"],
+      registerType: "autoUpdate",
+      injectRegister: false,
+      manifest: {
+        name: siteTitle,
+        short_name: siteTitle,
+        theme_color: "#ffffff",
+      },
+      pwaAssets: {
+        config: true,
+      },
+      workbox: {
+        navigateFallback: "/",
+        globPatterns: ["**/*.{css,js,html,svg,png,ico,txt}"],
+        globIgnores: ["**/_worker.js/**/*", "_worker.js"],
+        navigateFallbackDenylist: [/^\/keystatic/, /^\/api/],
+        skipWaiting: true,
+        maximumFileSizeToCacheInBytes: 3 * 1024 * 1024,
+      },
+      devOptions: {
+        enabled: false,
+        navigateFallbackAllowlist: [/^\//],
+      },
+      experimental: {
+        directoryAndTrailingSlashHandler: true,
+      },
     }),
   ],
 });
