@@ -29,7 +29,7 @@ interface Props {
 	buttons: ButtonProps[];
 }
 
-const { title, buttons } = Astro.props as Props;
+const { title } = Astro.props as Props;
 ---
 
 <div class="items-center text-sm font-medium justify-center flex pt-20 pb-16">
@@ -40,21 +40,4 @@ const { title, buttons } = Astro.props as Props;
 	class="text-sm font-medium auto-cols-fr grid-cols-1 md:grid-cols-2 grid-rows-[auto_auto] grid gap-[3.13rem]"
 >
 	{recentWorks.map((work) => <WorkPreview {work} />)}
-</div>
-<div
-	class="items-center flex-col text-sm font-medium flex text-white pt-16 pb-20"
->
-	{
-		buttons.map(({ title, href, style, icon }) => (
-			<Link
-				href={href}
-				style={
-					style as "primary" | "button" | "outline" | "buttonLight"
-				}
-				icon={icon}
-			>
-				{title}
-			</Link>
-		))
-	}
 </div>
