@@ -36,7 +36,7 @@ export default config({
   },
   ui: {
     brand: {
-      name: "Your Company",
+      name: "Sportmeter",
       mark: BrandMarkComponent,
     },
   },
@@ -66,7 +66,7 @@ export default config({
           {
             label: "Pages",
             itemLabel: (props) => props.fields.title.value,
-          },
+          }
         ),
         actions: fields.array(
           fields.object({
@@ -85,7 +85,7 @@ export default config({
           {
             label: "Actions",
             itemLabel: (props) => props.fields.title.value,
-          },
+          }
         ),
         contacts: fields.object(
           {
@@ -95,7 +95,7 @@ export default config({
           },
           {
             label: "Contacts",
-          },
+          }
         ),
         socials: fields.array(
           fields.object({
@@ -105,7 +105,7 @@ export default config({
           {
             itemLabel: (props) => props.fields.link.value,
             label: "Social",
-          },
+          }
         ),
       },
     }),
@@ -114,9 +114,9 @@ export default config({
       path: "src/content/global/widget",
       format: { data: "json" },
       schema: {
-        enabled: fields.checkbox({ label: "Abilita" }),
+        enabled: fields.checkbox({ label: "Inschakelen" }),
         icon: fields.select({
-          label: "Icona",
+          label: "Pictogram",
           options: IconList,
           defaultValue: "whatsapp",
         }),
@@ -144,13 +144,13 @@ export default config({
               {
                 label: "Social",
                 itemLabel: (props) =>
-                  props.fields.title.value ?? "Imposta un titolo",
-              },
+                  props.fields.title.value ?? "Stel een titel in",
+              }
             ),
           },
           {
             label: "Contacts",
-          },
+          }
         ),
       },
     }),
@@ -159,7 +159,7 @@ export default config({
     pages: collection({
       label: "Pages",
       slugField: "title",
-      path: "src/content/pages/it/*",
+      path: "src/content/pages/nl/*",
       entryLayout: "content",
       columns: ["title", "lastUpdateDate"],
       previewUrl: "/{slug}",
@@ -168,7 +168,7 @@ export default config({
         title: fields.slug({
           name: {
             label: "Title",
-            description: "Titolo della pagina",
+            description: "Paginatitel",
             validation: {
               isRequired: true,
             },
@@ -177,7 +177,7 @@ export default config({
           slug: {
             label: "SEO-friendly slug",
             description:
-              "Slug da usare per la pagina, attenzione, è consigliato non modificarlo dopo la pubblicazione.",
+              "Slug om te gebruiken voor de pagina, let op, het wordt afgeraden om deze te wijzigen na publicatie.",
           },
         }),
         subtitle: fields.text({
@@ -190,18 +190,18 @@ export default config({
           publicPath: "@/assets/pages/",
         }),
         type: fields.select({
-          label: "Tipo pagina",
+          label: "Pagina type",
           options: [
             {
-              label: "Informativa",
+              label: "Informatief",
               value: "informational",
             },
             {
-              label: "Servizio",
+              label: "Dienst",
               value: "service",
             },
             {
-              label: "Contatti/supporto",
+              label: "Contact/ondersteuning",
               value: "support",
             },
             {
@@ -209,7 +209,7 @@ export default config({
               value: "blog",
             },
             {
-              label: "Termini e condizioni",
+              label: "Algemene voorwaarden",
               value: "terms",
             },
           ],
@@ -217,7 +217,7 @@ export default config({
         }),
         lastUpdateDate: fields.date({
           label: "Last Update Date",
-          description: "Data dell'ultimo aggiornamento della pagina",
+          description: "Datum van laatste update van de pagina",
           defaultValue: {
             kind: "today",
           },
@@ -226,17 +226,17 @@ export default config({
           },
         }),
         hideTitle: fields.checkbox({
-          label: "Nascondi titolo",
+          label: "Titel verbergen",
           defaultValue: false,
         }),
         addPadding: fields.checkbox({
-          label: "Aggiungi padding",
+          label: "Padding toevoegen",
           defaultValue: true,
         }),
         seo: fields.object(
           {
             title: fields.text({
-              label: "Titolo SEO",
+              label: "SEO-titel",
               validation: {
                 isRequired: true,
                 length: {
@@ -245,7 +245,7 @@ export default config({
               },
             }),
             description: fields.text({
-              label: "Descrizione SEO",
+              label: "SEO-beschrijving",
               multiline: true,
               validation: {
                 isRequired: true,
@@ -256,7 +256,7 @@ export default config({
             }),
             author: fields.relationship({
               label: "Author",
-              description: "Autore della pagina",
+              description: "Auteur van de pagina",
               collection: "authors",
               validation: {
                 isRequired: true,
@@ -265,8 +265,8 @@ export default config({
           },
           {
             label: "SEO",
-            description: "Opzioni SEO per la pagina",
-          },
+            description: "SEO-opties voor de pagina",
+          }
         ),
         content: fields.markdoc({
           label: "Content",
@@ -279,115 +279,115 @@ export default config({
           },
           components: {
             Container: wrapper({
-              label: "Contenitore",
+              label: "Container",
               icon: ContainerIcon({ ariaHidden: true }),
               description:
-                "Contenitore che ti consente di agiungere del margine a destra e sinistra",
+                "Container die je in staat stelt om marge toe te voegen aan de rechter- en linkerkant",
               schema: {
                 class: fields.text({
-                  label: "Classi custom",
+                  label: "Aangepaste klassen",
                 }),
               },
             }),
             ContainerFluid: wrapper({
-              label: "Contenitore largo",
+              label: "Brede container",
               icon: ContainerFluidIcon({ ariaHidden: true }),
               description:
-                "Contenitore che ti consente di avere del margine a destra e sinistra",
+                "Container die je in staat stelt om marge te hebben aan de rechter- en linkerkant",
               schema: {
                 class: fields.text({
-                  label: "Classi custom",
+                  label: "Aangepaste klassen",
                 }),
               },
             }),
             Prose: wrapper({
-              label: "Prosa",
+              label: "Proza",
               icon: ProseIcon({ ariaHidden: true }),
               description:
-                "Contenitore di testo, ideale per blog o per contenuti informativi",
+                "Tekstcontainer, ideaal voor blogs of informatieve inhoud",
               schema: {
                 class: fields.text({
-                  label: "Classi custom",
+                  label: "Aangepaste klassen",
                 }),
               },
             }),
             Flex: wrapper({
               label: "Flexbox",
               icon: FlexboxIcon({ ariaHidden: true }),
-              description: "Contenitore flessibile",
+              description: "Flexibele container",
               schema: {
                 class: fields.text({
-                  label: "Classi custom",
-                  description: "Aggiungi classi personalizzate al contenitore",
+                  label: "Aangepaste klassen",
+                  description: "Voeg aangepaste klassen toe aan de container",
                 }),
                 direction: fields.select({
-                  label: "Direzione",
-                  description: "Scegli la direzione del contenitore",
+                  label: "Richting",
+                  description: "Kies de richting van de container",
                   options: [
-                    { label: "Da sinistra a destra", value: "ltr" },
-                    { label: "Da destra a sinistra", value: "rtl" },
-                    { label: "Dall'alto in basso", value: "ttb" },
-                    { label: "Dal basso in alto", value: "btt" },
+                    { label: "Van links naar rechts", value: "ltr" },
+                    { label: "Van rechts naar links", value: "rtl" },
+                    { label: "Van boven naar beneden", value: "ttb" },
+                    { label: "Van beneden naar boven", value: "btt" },
                   ],
                   defaultValue: "ltr",
                 }),
                 verticalAlign: fields.select({
-                  label: "Allineamento verticale",
+                  label: "Verticale uitlijning",
                   description:
-                    "Scegli l'allineamento verticale del contenitore",
+                    "Kies de verticale uitlijning van de container",
                   options: [
-                    { label: "In alto", value: "top" },
-                    { label: "Al centro", value: "middle" },
-                    { label: "In basso", value: "bottom" },
-                    { label: "Espandi", value: "stretch" },
-                    { label: "Spaziato", value: "spaceBetween" },
-                    { label: "Spaziato intorno", value: "spaceAround" },
+                    { label: "Bovenaan", value: "top" },
+                    { label: "In het midden", value: "middle" },
+                    { label: "Onderaan", value: "bottom" },
+                    { label: "Uitrekken", value: "stretch" },
+                    { label: "Verspreid", value: "spaceBetween" },
+                    { label: "Ruimte eromheen", value: "spaceAround" },
                   ],
                   defaultValue: "top",
                 }),
                 horizontalAlign: fields.select({
-                  label: "Allineamento orizzontale",
+                  label: "Horizontale uitlijning",
                   description:
-                    "Scegli l'allineamento orizzontale del contenitore",
+                    "Kies de horizontale uitlijning van de container",
                   options: [
-                    { label: "A sinistra", value: "left" },
-                    { label: "Al centro", value: "center" },
-                    { label: "A destra", value: "right" },
-                    { label: "Spaziato", value: "spaceBetween" },
-                    { label: "Spaziato intorno", value: "spaceAround" },
-                    { label: "Spaziato uniformemente", value: "spaceEvenly" },
+                    { label: "Links", value: "left" },
+                    { label: "In het midden", value: "center" },
+                    { label: "Rechts", value: "right" },
+                    { label: "Verspreid", value: "spaceBetween" },
+                    { label: "Ruimte eromheen", value: "spaceAround" },
+                    { label: "Gelijkmatig verdeeld", value: "spaceEvenly" },
                   ],
                   defaultValue: "left",
                 }),
                 itemsAlignment: fields.select({
-                  label: "Allineamento oggetti",
+                  label: "Uitlijning van objecten",
                   description:
-                    "Scegli l'allineamento degli oggetti all'interno del contenitore",
+                    "Kies de uitlijning van objecten binnen de container",
                   options: [
-                    { label: "All'inizio", value: "start" },
-                    { label: "Al centro", value: "center" },
-                    { label: "Alla fine", value: "end" },
-                    { label: "Espandi", value: "stretch" },
-                    { label: "Alla base del testo", value: "baseline" },
+                    { label: "Aan het begin", value: "start" },
+                    { label: "In het midden", value: "center" },
+                    { label: "Aan het einde", value: "end" },
+                    { label: "Uitrekken", value: "stretch" },
+                    { label: "Op de basislijn van de tekst", value: "baseline" },
                   ],
                   defaultValue: "start",
                 }),
                 gap: fields.number({
-                  label: "Spaziatura",
-                  description: "Scegli lo spazio tra gli oggetti",
+                  label: "Tussenruimte",
+                  description: "Kies de ruimte tussen objecten",
                   defaultValue: 0,
                 }),
                 wrap: fields.checkbox({
-                  label: "Vai a capo",
+                  label: "Regel omslaan",
                   description:
-                    "Scegli se andare a capo o meno quando non c'è più spazio nel contenitore",
+                    "Kies of de tekst naar een nieuwe regel moet gaan wanneer er geen ruimte meer is in de container",
                   defaultValue: false,
                 }),
               },
             }),
             Hero: block({
               label: "Hero",
-              description: "Sezione hero dell'homepage",
+              description: "Hero-sectie van de homepage",
               icon: HeroIcon({ ariaHidden: true }),
               schema: {
                 title: fields.text({
@@ -414,13 +414,13 @@ export default config({
                       ],
                       defaultValue: "button",
                     }),
-                    icon: fields.text({ label: "Icona" }),
+                    icon: fields.text({ label: "Pictogram" }),
                   }),
                   // Labelling options
                   {
                     label: "Actions",
                     itemLabel: (props) => props.fields.title.value,
-                  },
+                  }
                 ),
               },
             }),
@@ -442,8 +442,8 @@ export default config({
                     publicPath: "/src/assets/pages/",
                   }),
                   {
-                    label: "Loghi",
-                  },
+                    label: "Logo's",
+                  }
                 ),
               },
             }),
@@ -466,16 +466,16 @@ export default config({
                       multiline: true,
                     }),
                     icon: fields.image({
-                      label: "Icona",
+                      label: "Pictogram",
                       directory: "src/assets/pages",
                       publicPath: "/src/assets/pages/",
                     }),
                   }),
                   // Labelling options
                   {
-                    label: "Servizi",
+                    label: "Diensten",
                     itemLabel: (props) => props.fields.title.value,
-                  },
+                  }
                 ),
               },
             }),
@@ -508,13 +508,13 @@ export default config({
                       ],
                       defaultValue: "button",
                     }),
-                    icon: fields.text({ label: "Icona" }),
+                    icon: fields.text({ label: "Pictogram" }),
                   }),
                   // Labelling options
                   {
                     label: "Actions",
                     itemLabel: (props) => props.fields.title.value,
-                  },
+                  }
                 ),
               },
             }),
@@ -556,9 +556,9 @@ export default config({
                   }),
                   // Labelling options
                   {
-                    label: "Risultati",
+                    label: "Resultaten",
                     itemLabel: (props) => props.fields.label.value,
-                  },
+                  }
                 ),
               },
             }),
@@ -643,7 +643,7 @@ export default config({
                   {
                     label: "Fields",
                     itemLabel: (props) => props.fields.label.value,
-                  },
+                  }
                 ),
               },
             }),
@@ -654,7 +654,7 @@ export default config({
     posts: collection({
       label: "Posts",
       slugField: "title",
-      path: "src/content/posts/it/*",
+      path: "src/content/posts/nl/*",
       entryLayout: "content",
       columns: ["title", "lastUpdateDate"],
       previewUrl: "/post/{slug}",
@@ -663,7 +663,7 @@ export default config({
         title: fields.slug({
           name: {
             label: "Title",
-            description: "Titolo del post",
+            description: "Titel van het bericht",
             validation: {
               isRequired: true,
             },
@@ -672,7 +672,7 @@ export default config({
           slug: {
             label: "SEO-friendly slug",
             description:
-              "Slug da usare per il post, attenzione, è consigliato non modificarlo dopo la pubblicazione.",
+              "Slug om te gebruiken voor het bericht, let op, het wordt afgeraden om deze te wijzigen na publicatie.",
           },
         }),
         description: fields.text({
@@ -684,7 +684,7 @@ export default config({
         }),
         author: fields.relationship({
           label: "Author",
-          description: "Autore dell'articolo",
+          description: "Auteur van het artikel",
           collection: "authors",
           validation: {
             isRequired: true,
@@ -701,7 +701,7 @@ export default config({
         }),
         pubDate: fields.date({
           label: "Publication Date",
-          description: "Data di pubblicazione dell'articolo",
+          description: "Publicatiedatum van het artikel",
           defaultValue: {
             kind: "today",
           },
@@ -711,7 +711,7 @@ export default config({
         }),
         lastUpdateDate: fields.date({
           label: "Last Update Date",
-          description: "Data dell'ultimo aggiornamento dell'articolo'",
+          description: "Datum van laatste update van het artikel",
           defaultValue: {
             kind: "today",
           },
@@ -720,7 +720,7 @@ export default config({
           },
         }),
         hidden: fields.checkbox({
-          label: "Hidden",
+          label: "Verborgen",
         }),
         content: fields.markdoc({
           label: "Content",
@@ -738,7 +738,7 @@ export default config({
     works: collection({
       label: "Works",
       slugField: "title",
-      path: "src/content/works/it/*",
+      path: "src/content/works/nl/*",
       entryLayout: "content",
       columns: ["title", "lastUpdateDate"],
       previewUrl: "/works/{slug}",
@@ -747,7 +747,7 @@ export default config({
         title: fields.slug({
           name: {
             label: "Title",
-            description: "Titolo del post",
+            description: "Titel van het werk",
             validation: {
               isRequired: true,
             },
@@ -756,7 +756,7 @@ export default config({
           slug: {
             label: "SEO-friendly slug",
             description:
-              "Slug da usare per il post, attenzione, è consigliato non modificarlo dopo la pubblicazione.",
+              "Slug om te gebruiken voor het werk, let op, het wordt afgeraden om deze te wijzigen na publicatie.",
           },
         }),
         link: fields.text({
@@ -783,7 +783,7 @@ export default config({
         }),
         pubDate: fields.date({
           label: "Publication Date",
-          description: "Data di pubblicazione dell'articolo",
+          description: "Publicatiedatum van het artikel",
           defaultValue: {
             kind: "today",
           },
@@ -793,7 +793,7 @@ export default config({
         }),
         lastUpdateDate: fields.date({
           label: "Last Update Date",
-          description: "Data dell'ultimo aggiornamento dell'articolo'",
+          description: "Datum van laatste update van het artikel",
           defaultValue: {
             kind: "today",
           },
@@ -837,7 +837,7 @@ export default config({
           },
         }),
         avatar: fields.image({
-          label: "Immagine di profilo",
+          label: "Profielfoto",
           directory: "src/assets/authors",
           publicPath: "@/assets/authors/",
         }),
