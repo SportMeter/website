@@ -1,4 +1,7 @@
-import type { APIRoute } from 'astro';
+import { API_KEY_MAILCHANNELS, DKIM_PRIVATE_KEY } from "@/environment";
+import type { APIRoute } from "astro";
+
+export const prerender = false;
 
 interface ContactFormData {
   name: string;
@@ -10,21 +13,38 @@ interface ContactFormData {
 
 export const POST: APIRoute = async ({ request }) => {
   try {
-    const formData = await request.formData();
-    
-    const contactData: ContactFormData = {
-      name: formData.get('name') as string,
-      email: formData.get('email') as string,
-      phone: formData.get('phone') as string || '',
-      preferredCallTime: formData.get('preferredCallTime') as string || '',
-      message: formData.get('message') as string,
-    };
+    const contentType = request.headers.get("content-type") || "";
+
+    let contactData: ContactFormData;
+
+    if (contentType.includes("application/json")) {
+      const body = await request.json();
+      contactData = {
+        name: body.name,
+        email: body.email,
+        phone: body.phone || "",
+        preferredCallTime: body.preferredCallTime || "",
+        message: body.message,
+      };
+    } else {
+      // Try to handle as form data
+      const body = await request.text();
+      const params = new URLSearchParams(body);
+
+      contactData = {
+        name: params.get("name") as string,
+        email: params.get("email") as string,
+        phone: params.get("phone") || "",
+        preferredCallTime: params.get("preferredCallTime") || "",
+        message: params.get("message") as string,
+      };
+    }
 
     // Basic validation
     if (!contactData.name || !contactData.email || !contactData.message) {
       return new Response(
-        JSON.stringify({ error: 'Name, email, and message are required' }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
+        JSON.stringify({ error: "Name, email, and message are required" }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
 
@@ -32,8 +52,8 @@ export const POST: APIRoute = async ({ request }) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(contactData.email)) {
       return new Response(
-        JSON.stringify({ error: 'Please provide a valid email address' }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
+        JSON.stringify({ error: "Please provide a valid email address" }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
 
@@ -43,8 +63,8 @@ New contact form submission from SportMeter website:
 
 Name: ${contactData.name}
 Email: ${contactData.email}
-Phone: ${contactData.phone || 'Not provided'}
-Preferred Call Time: ${contactData.preferredCallTime || 'Not provided'}
+Phone: ${contactData.phone || "Not provided"}
+Preferred Call Time: ${contactData.preferredCallTime || "Not provided"}
 
 Message:
 ${contactData.message}
@@ -57,15 +77,15 @@ Sent from SportMeter contact form
     const emailRequest = {
       personalizations: [
         {
-          to: [{ email: 'sportmeter.app@gmail.com', name: 'SportMeter' }],
-          dkim_domain: 'sportmeter.nl',
-          dkim_selector: 'mailchannels',
-          dkim_private_key: '',
+          to: [{ email: "sportmeter.app@gmail.com", name: "SportMeter" }],
+          dkim_domain: "sport-meter.nl",
+          dkim_selector: "mc1",
+          dkim_private_key: DKIM_PRIVATE_KEY,
         },
       ],
       from: {
-        email: 'noreply@sportmeter.nl',
-        name: 'SportMeter Contact Form',
+        email: "noreply@sport-meter.nl",
+        name: "SportMeter Contact Form",
       },
       reply_to: {
         email: contactData.email,
@@ -74,37 +94,42 @@ Sent from SportMeter contact form
       subject: `New Contact Form Submission from ${contactData.name}`,
       content: [
         {
-          type: 'text/plain',
+          type: "text/plain",
           value: emailContent,
         },
       ],
     };
 
-    const mailResponse = await fetch('https://api.mailchannels.net/tx/v1/send', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(emailRequest),
-    });
-
+    const mailResponse = await fetch(
+      "https://api.mailchannels.net/tx/v1/send",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Api-Key": API_KEY_MAILCHANNELS,
+          "X-MailChannels-SenderId": "soothdev",
+        },
+        body: JSON.stringify(emailRequest),
+      }
+    );
     if (!mailResponse.ok) {
-      console.error('MailChannels error:', await mailResponse.text());
-      return new Response(
-        JSON.stringify({ error: 'Failed to send email' }),
-        { status: 500, headers: { 'Content-Type': 'application/json' } }
-      );
+      console.error("MailChannels error:", mailResponse.text());
+      return new Response(JSON.stringify({ error: "Failed to send email" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
+    console.log("Email sent successfully, status:", mailResponse.status);
     return new Response(
-      JSON.stringify({ success: true, message: 'Message sent successfully!' }),
-      { status: 200, headers: { 'Content-Type': 'application/json' } }
+      JSON.stringify({ success: true, message: "Message sent successfully!" }),
+      { status: 200, headers: { "Content-Type": "application/json" } }
     );
   } catch (error) {
-    console.error('Contact form error:', error);
-    return new Response(
-      JSON.stringify({ error: 'Internal server error' }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
-    );
+    console.error("Contact form error:", error);
+    return new Response(JSON.stringify({ error: "Internal server error" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 };
