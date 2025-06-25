@@ -1,7 +1,6 @@
 ---
 import { type CollectionEntry, getCollection } from "astro:content";
 import type { ButtonProps } from "@/components/primitives/Button.astro";
-import Link from "@/components/primitives/Link.astro";
 import WorkPreview from "@/components/sections/WorkPreview.astro";
 
 const currentLocale = Astro.currentLocale;
@@ -31,13 +30,13 @@ interface Props {
 
 const { title } = Astro.props as Props;
 ---
-
 <div class="items-center text-sm font-medium justify-center flex pt-20 pb-16">
-	<h2 class="text-[3.13rem] leading-none font-semibold my-1">{title}</h2>
+  <h2 class="text-[3.13rem] leading-none font-semibold my-1">{title}</h2>
 </div>
 
 <div
-	class="text-sm font-medium auto-cols-fr grid-cols-1 md:grid-cols-2 grid-rows-[auto_auto] grid gap-[3.13rem]"
+  class="text-sm font-medium auto-cols-fr grid-cols-1 md:grid-cols-2 grid-rows-[auto_auto] grid gap-[3.13rem]"
 >
-	{recentWorks.map((work) => <WorkPreview {work} />)}
+  {recentWorks.map((work) => <WorkPreview {work} />)}
 </div>
+
