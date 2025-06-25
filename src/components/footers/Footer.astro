@@ -85,19 +85,6 @@ const lastPosts = posts
 					class="text-4xl lg:text-6xl leading-normal text-center max-w-4xl"
 					set:html={footer.title}
 				/>
-				<div class="mt-8">
-					{
-						footer?.buttons?.map(({ text, url }) => (
-							<Link
-								href={url}
-								style="buttonLight"
-								icon="iconamoon:arrow-top-right-1-thin"
-							>
-								{text}
-							</Link>
-						))
-					}
-				</div>
 			</div>
 			<div class="mt-16">
 				<div class="items-center justify-between flex gap-4">
