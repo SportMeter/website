@@ -1,0 +1,23 @@
+---
+import Contact from './Contact.astro';
+import Container from '../primitives/Container.astro';
+import {type FormField } from "@/types/contact";
+
+interface Props {
+	title: string;
+  subTitle: string;
+	fields: FormField[];
+}
+
+const { title, fields, subTitle} = Astro.props;
+---
+
+<div
+  id="ContactLanding"
+  class="justify-center flex flex-col m-4">
+
+    <div class="items-center text-sm font-medium justify-center flex pt-20">
+      <h2 class="text-[3.13rem] leading-none font-semibold my-1">{title}</h2>
+    </div>
+    <Contact title={subTitle} fields={fields} />
+</div>
