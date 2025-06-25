@@ -2,6 +2,7 @@
 dist/
 .output/
 
+rsa-keys/
 # dependencies
 node_modules/
 
