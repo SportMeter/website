@@ -14,7 +14,7 @@ seo:
 {% Hero
    title="Samen geven we kleur aan onze vereniging"
    subtitle="Met SportMeter bevordert u een positieve omgeving waar vooruitgang begint met plezier. Gebruik onze modules om ervoor te zorgen dat alle stemmen worden gehoord, zelfs die van leden die normaal gesproken niet snel hun mening delen."
-   buttons=[{title: "Ja, ik doe mee!", href: "/contact", style: "button", icon: "iconamoon:arrow-top-right-1-thin"}] /%}
+   buttons=[{title: "Ja, ik doe mee!", href: "#ContactLanding", style: "button", icon: "iconamoon:arrow-top-right-1-thin"}] /%}
 
 {% Container %}
 
@@ -26,8 +26,9 @@ seo:
 
 {% Container %}
 
-{% Contact
-  title="Neem contact op"
+{% CantactLanding
+  title="Meld je aan"
+  subTitle="Verstuur een berichtje"
   fields=[
     {title: "Volledige naam", placeholder: "John Doe", required: true, type: "text"},
     {title: "E-mail", placeholder: "contact@email.com", required: true, type: "email"},
