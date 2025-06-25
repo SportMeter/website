@@ -93,6 +93,14 @@ export default defineMarkdocConfig({
       },
       render: component("./src/components/sections/RecentWork.astro"),
     },
+    CantactLanding: {
+      attributes: {
+        title: { type: String, render: "title", required: true },
+        subTitle: { type: String, render: "subtitle", required: true },
+        fields: { type: Array, render: "fields", required: true },
+      },
+      render: component("./src/components/sections/ContactLanding.astro"),
+    },
     Testimonial: {
       attributes: {
         testimonial: { type: String, render: "testimonial", required: true },
