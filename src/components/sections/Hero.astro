@@ -13,7 +13,7 @@ interface Props {
 const defaultButtons: ButtonProps[] = [
 	{
 		title: "Contact",
-		href: "#ContactLanding",
+		href: "#contact",
 		style: "button",
 		icon: "iconamoon:arrow-top-right-1-thin",
 	},
@@ -51,8 +51,9 @@ const { title, subtitle, buttons = defaultButtons } = Astro.props;
 									buttons.map(
 										({ title, href, style, icon }) => (
 											<Link
+                        id="contact-landing-button"
 												data-hero-reveal
-												href={href}
+												href="#"
 												style={
 													style as
 														| "primary"
@@ -126,12 +127,18 @@ const { title, subtitle, buttons = defaultButtons } = Astro.props;
 	function scrollDown() {
 		gsap.to(window, { duration: 0.5, scrollTo: "#services" });
 	}
+	function scrollDownContact() {
+		gsap.to(window, { duration: 0.8, scrollTo: "#ContactLanding" });
+	}
 
 	lm.onElementLoaded("hero", (ctx) => {
 		ctx?.add(() => {
 			const scrollDownButton =
 				document.getElementById("scroll-down-button");
+      const contactButton = document.getElementById("contact-landing-button")
+
 			scrollDownButton?.addEventListener("click", scrollDown);
+      contactButton?.addEventListener("click",scrollDownContact)
 
 			gsap.to("[data-hero-reveal]", {
 				blur: 0,

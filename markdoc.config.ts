@@ -96,7 +96,12 @@ export default defineMarkdocConfig({
     CantactLanding: {
       attributes: {
         title: { type: String, render: "title", required: true },
-        subTitle: { type: String, render: "subtitle", required: true },
+        message: { type: String, render: "message", required: true },
+        privacyStatement: {
+          type: String,
+          render: "privacyStatement",
+          required: true,
+        },
         fields: { type: Array, render: "fields", required: true },
       },
       render: component("./src/components/sections/ContactLanding.astro"),
@@ -133,7 +138,12 @@ export default defineMarkdocConfig({
     },
     Contact: {
       attributes: {
-        title: { type: String, render: "title", required: true },
+        message: { type: String, render: "message", required: true },
+        privacyStatement: {
+          type: String,
+          render: "privacyStatement",
+          required: true,
+        },
         fields: { type: Array, render: "fields", required: true },
       },
       render: component("./src/components/sections/Contact.astro"),
