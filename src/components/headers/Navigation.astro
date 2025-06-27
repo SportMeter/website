@@ -94,6 +94,13 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 	#navigation {
 		pointer-events: none;
 	}
+	#main-header {
+		backdrop-filter: blur(0px);
+		-webkit-backdrop-filter: blur(0px);
+		transition: backdrop-filter 0.3s ease-out;
+		mask-image: linear-gradient(to top, transparent 10%, black 60%);
+		-webkit-mask-image: linear-gradient(to top, transparent 10%, black 60%);
+	}
 	[data-nav-border-reveal] {
 		--tw-border-opacity: 0;
 	}
@@ -124,9 +131,9 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 	}
 </style>
 
-<header class="fixed w-full z-30">
+<header id="main-header" class="fixed w-full z-30">
 	<div
-		class="items-center auto-cols-fr grid-cols-2 lg:grid-cols-2 grid-rows-[auto] justify-between left-0 py-3.5 px-6 lg:px-20 right-0 top-0 grid gap-4"
+		class="items-center auto-cols-fr grid-cols-2 lg:grid-cols-2 grid-rows-[auto] justify-between left-0 py-2 px-6 lg:px-20 right-0 top-0 grid gap-4"
 	>
 		<div
 			class="items-center flex-wrap justify-start relative flex text-blue-700 z-20"
@@ -146,7 +153,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 					viewBox="0 0 400 130"
 					width={50}
 					height={50}
-					class="w-20 h-20 lg:w-24 lg:h-24"
+					class="w-16 h-12 lg:w-20 lg:h-20"
 					xml:space="preserve"
 				>
 					<!-- Main logo icon (non-animated) -->
@@ -196,7 +203,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 		</div>
 		<div class="justify-self-end col-span-1 row-span-1 z-40 col-start-3">
 			<div
-				class="items-center justify-center relative flex h-16 lg:w-24 lg:h-24"
+				class="items-center justify-center relative flex h-10 lg:w-16 lg:h-16"
 			>
 				<div class="menu-icon">
 					<input
@@ -325,6 +332,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 				},
 			})
 				.to("[data-company-name]", { opacity: 0 })
+				.to("#main-header", { backdropFilter: "blur(5px)", "-webkit-backdrop-filter": "blur(5px)" }, "<")
 				// Removed old logo animation references
 				.set("#header-logo", { pointerEvents: "none" });
 
