@@ -36,10 +36,6 @@ export default defineConfig({
     define: {
       __DATE__: `'${new Date().toISOString()}'`,
     },
-    ssr: {
-      noExternal: [],
-      external: ["fs", "path", "url"],
-    },
   },
   integrations: [
     alpinejs(),
