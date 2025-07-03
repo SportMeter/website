@@ -30,11 +30,15 @@ const { title } = Astro.props;
 ---
 
 <div class="text-sm font-medium pt-20 pb-32">
-	<div
-		class="items-center justify-center flex text-[3.13rem] leading-none font-semibold"
-	>
-		<h2 class="my-1">{title}</h2>
-	</div>
+<div class="items-center text-sm font-medium justify-center flex pt-20 pb-8">
+  <div class="bg-gray-100 rounded-2xl px-4 py-2">
+      <h2 class="text-lg leading-none font-semibold my-1">Partner verenegingen</h2>
+  </div>
+</div>
+
+<div class="mt-3.5 text-lg">
+  <p class="mb-3">{title}</p>
+  </div>
 	<div class="mt-16">
 		<div
 			class="gap-x-[1.88rem] auto-cols-fr grid-cols-1 lg:grid-cols-2 grid-rows-[auto] gap-y-10 grid"

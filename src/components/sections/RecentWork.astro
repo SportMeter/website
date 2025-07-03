@@ -30,8 +30,14 @@ interface Props {
 
 const { title } = Astro.props as Props;
 ---
-<div class="items-center text-sm font-medium justify-center flex pt-20 pb-16">
-  <h2 class="text-[3.13rem] leading-none font-semibold my-1">{title}</h2>
+<div class="items-center text-sm font-medium justify-center flex pt-20 pb-8">
+  <div class="bg-gray-100 rounded-2xl px-4 py-2">
+    <h2 class="text-lg leading-none font-semibold my-1">Modules</h2>
+  </div>
+</div>
+
+<div class="mt-3.5 text-lg">
+  <p class="mb-3">{title}</p>
 </div>
 
 <div

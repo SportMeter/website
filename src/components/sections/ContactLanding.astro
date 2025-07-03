@@ -1,6 +1,5 @@
 ---
 import Contact from './Contact.astro';
-import Container from '../primitives/Container.astro';
 import {type FormField } from "@/types/contact";
 
 interface Props {
@@ -14,6 +13,11 @@ const { title, fields, message, privacyStatement} = Astro.props;
 console.log("test")
 ---
 
+<div class="items-center text-sm font-medium justify-center flex">
+  <div class="bg-gray-100 rounded-2xl px-4 py-2">
+      <h2 class="text-lg leading-none font-semibold my-1">Contact</h2>
+  </div>
+</div>
 <div
   id="ContactLanding"
   class="justify-center flex flex-col m-4">
