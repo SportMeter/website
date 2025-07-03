@@ -2,7 +2,8 @@
 import { Image } from "astro:assets";
 
 interface Props {
-	title: string;
+  sectionTitle:string;
+	introSection: string;
 	services: {
 		title: string;
 		description: string;
@@ -10,22 +11,23 @@ interface Props {
 	}[];
 }
 
-const { title, services } = Astro.props;
+const { sectionTitle, introSection, services } = Astro.props;
 
 const images = import.meta.glob<{ default: ImageMetadata }>(
 	"/src/assets/pages/**/*.{webp,jpeg,jpg,png,gif,svg}",
 );
+console.log(sectionTitle,introSection)
 ---
 
 <div class="items-center text-sm font-medium justify-center flex pt-16">
   <div class="bg-gray-100 rounded-2xl px-4 py-2">
-      <h2 class="text-lg leading-none font-semibold my-1">Stappen</h2>
+    <h2 class="text-lg leading-none font-semibold my-1">{sectionTitle}</h2>
   </div>
 </div>
 <div class="pt-8" id="services">
 	<p
 		class="text-[2.13rem] leading-9 font-semibold lg:max-w-[64%] mb-3"
-		set:html={title}
+		set:html={introSection}
 	/>
 	<div class="mt-16">
 		<div

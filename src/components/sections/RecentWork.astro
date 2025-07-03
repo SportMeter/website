@@ -24,20 +24,21 @@ const recentWorks = works
 	.slice(0, 4) as CollectionEntry<"works">[];
 
 interface Props {
-	title: string;
+  sectionTitle:string;
+	introSection: string;
 	buttons: ButtonProps[];
 }
 
-const { title } = Astro.props as Props;
+const { sectionTitle,introSection } = Astro.props as Props;
 ---
 <div class="items-center text-sm font-medium justify-center flex pt-20 pb-8">
   <div class="bg-gray-100 rounded-2xl px-4 py-2">
-    <h2 class="text-lg leading-none font-semibold my-1">Modules</h2>
+    <h2 class="text-lg leading-none font-semibold my-1">{sectionTitle}</h2>
   </div>
 </div>
 
 <div class="mt-3.5 text-lg">
-  <p class="mb-3">{title}</p>
+  <p class="mb-3">{introSection}</p>
 </div>
 
 <div

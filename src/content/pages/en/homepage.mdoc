@@ -19,15 +19,35 @@ seo:
 {% Container %}
 
 {% RecentWork
-   title="Modules"
-   /%}
+   sectionTitle="Modules"
+   introSection="These are the modules we provide"
+/%}
 
-{% /Container %}
 
-{% Container %}
+{% Services
+   sectionTitle="Steps"
+   introSection="Wij willen de lagen in een vereniging samen brengen door <span class=\"text-neutral-400\">de frictie te verlagen.</span>"
+   services=[
+    { 
+      title: "Kies je startpunt",
+      description: "Samen maken we welzijn zichtbaar, bespreekbaar en werkbaar binnen sport. Elke vereniging is anders. Kies een module die past bij jullie huidige behoeften. Beide modules sluiten op elkaar aan en kunnen gecombineerd worden.", 
+      icon: "/src/assets/pages/homepage/icon-number-1.png"
+    },
+    { title: "Bepaal de inrichting van de pilot",
+      description: "Geen korte sprint, maar een traject waarin we écht samen aan de slag gaan. We leren jullie club kennen en we richten alles samen in. Samen creëren we een veilige ruimte waarin sporters écht gehoord worden en begeleiders professioneel kunnen groeien.",
+      icon: "/src/assets/pages/homepage/icon-number-2.png"
+    }, 
+    { title: "Starten, bijhouden, doorgroeien",
+      description: "Na een korte onboarding gaan we los. Je krijgt: Duidelijke dashboards voor coaches & begeleiders. Persoonlijke begeleiding van ons team.We verbeteren onderweg, leren van elkaar en bouwen samen iets dat werkt – voor jullie én voor de rest van sportend Nederland.",
+      icon: "/src/assets/pages/homepage/icons-number-3.png"
+    }]
+/%}
+
+{% BlogLatest sectionTitle="partner verenigingen" introSection="De verenigengen waar wij mee samenwerken" /%}
 
 {% CantactLanding
-  title="Sign up"
+  sectionTitle="Contact"
+  introSection="Sign up"
   message="Send us your name and contact details to get acquainted, and we will send you a message to start a pilot."
   privacyStatement="We only use your contact details to get in touch about the safe association pilots"
   fields=[

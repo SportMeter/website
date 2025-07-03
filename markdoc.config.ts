@@ -69,7 +69,8 @@ export default defineMarkdocConfig({
     },
     BlogLatest: {
       attributes: {
-        title: { type: String, render: "title", required: true },
+        sectionTitle: { type: String, render: "sectionTitle", required: true },
+        introSection: { type: String, render: "introSection", required: true },
       },
       render: component("./src/components/sections/BlogLatest.astro"),
     },
@@ -82,20 +83,23 @@ export default defineMarkdocConfig({
     },
     Services: {
       attributes: {
-        title: { type: String, render: "title", required: true },
+        sectionTitle: { type: String, render: "sectionTitle", required: true },
+        introSection: { type: String, render: "introSection", required: true },
         services: { type: Array, render: "services", required: true },
       },
       render: component("./src/components/sections/Services.astro"),
     },
     RecentWork: {
       attributes: {
-        title: { type: String, render: "title", required: true },
+        sectionTitle: { type: String, render: "sectionTitle", required: true },
+        introSection: { type: String, render: "introSection", required: true },
       },
       render: component("./src/components/sections/RecentWork.astro"),
     },
     CantactLanding: {
       attributes: {
-        title: { type: String, render: "title", required: true },
+        sectionTitle: { type: String, render: "sectionTitle", required: true },
+        introSection: { type: String, render: "introSection", required: true },
         message: { type: String, render: "message", required: true },
         privacyStatement: {
           type: String,

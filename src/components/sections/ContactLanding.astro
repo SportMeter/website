@@ -3,19 +3,20 @@ import Contact from './Contact.astro';
 import {type FormField } from "@/types/contact";
 
 interface Props {
-	title: string;
+  sectionTitle:string;
+	introSection: string;
   message: string;
   privacyStatement: string;
 	fields: FormField[];
 }
 
-const { title, fields, message, privacyStatement} = Astro.props;
+const { sectionTitle,introSection, fields, message, privacyStatement} = Astro.props;
 console.log("test")
 ---
 
 <div class="items-center text-sm font-medium justify-center flex">
   <div class="bg-gray-100 rounded-2xl px-4 py-2">
-      <h2 class="text-lg leading-none font-semibold my-1">Contact</h2>
+    <h2 class="text-lg leading-none font-semibold my-1">{sectionTitle}</h2>
   </div>
 </div>
 <div
@@ -23,7 +24,7 @@ console.log("test")
   class="justify-center flex flex-col m-4">
 
     <div class="items-center text-sm font-medium justify-center flex pt-20">
-      <h2 class="text-[3.13rem] leading-none font-semibold my-1">{title}</h2>
+      <h2 class="text-[3.13rem] leading-none font-semibold my-1">{introSection}</h2>
     </div>
   <Contact message={message} privacyStatement={privacyStatement} fields={fields} />
 </div>
