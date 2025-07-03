@@ -20,11 +20,27 @@ seo:
 
 {% RecentWork
    title="Modules"
-   /%}
+/%}
 
-{% /Container %}
 
-{% Container %}
+{% Services
+   title="Wij willen de lagen in een vereniging samen brengen door <span class=\"text-neutral-400\">de frictie te verlagen.</span>"
+   services=[
+    { title: "Stap 1",
+      description: "We connect brand and UX, creating consistent digital identities across channels with strategic guidance to ensure seamless and cohesive brand representation.",
+      icon: "/src/assets/pages/homepage/icon-number-1.png"
+    },
+    { title: "Stap 2",
+      description: "We create memorable enterprise and consumer products,ensuring exceptional user experiences and providing comprehensive design systems for easy iteration.",
+      icon: "/src/assets/pages/homepage/icon-number-2.png"
+    }, 
+    { title: "Stap 2",
+      description: "We craft impactful advertising campaigns, ensuring exceptional reach and engagement, and providing comprehensive strategies for seamless execution.",
+      icon: "/src/assets/pages/homepage/icons-number-3.png"
+    }]
+/%}
+
+{% BlogLatest title="Onze partners" /%}
 
 {% CantactLanding
   title="Meld je aan"
