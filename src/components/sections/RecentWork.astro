@@ -37,8 +37,11 @@ const { sectionTitle,introSection } = Astro.props as Props;
   </div>
 </div>
 
-<div class="mt-3.5 text-lg">
-  <p class="mb-3">{introSection}</p>
+<div class="flex justify-center items-center">
+	<p
+		class="text-2xl leading-9 font-semibold mb-3"
+		set:html={introSection}
+	/>
 </div>
 
 <div

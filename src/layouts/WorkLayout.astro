@@ -4,7 +4,6 @@ import type { CollectionEntry } from "astro:content";
 import Container from "@/components/primitives/Container.astro";
 import Link from "@/components/primitives/Link.astro";
 import Prose from "@/components/primitives/Prose.astro";
-import Share from "@/components/primitives/Share.astro";
 import Title from "@/components/primitives/Title.astro";
 import { loadVideo } from "@/lib/asset-helpers";
 import { Icon } from "astro-icon/components";
@@ -27,10 +26,10 @@ interface ComponentLocales {
 
 const componentLocales: ComponentLocales = {
 	nl: {
-		visitProject: "Bezoek het project",
+		visitProject: "Ik doe mee met de pilot!",
 	},
 	en: {
-		visitProject: "Visit project",
+		visitProject: "I want to parcipate",
 	},
 };
 
@@ -52,22 +51,6 @@ const videoSrc = frontmatter.data?.video
 				<p class="mx-auto max-w-2xl pt-8 text-base text-slate-500">
 					<em>{frontmatter.data?.description}</em>
 				</p>
-				{
-					frontmatter.data.link && (
-						<Link
-							href={frontmatter.data.link}
-							target="_blank"
-							class="mt-10"
-							style="outline"
-						>
-							{l.visitProject}
-							<Icon
-								name="iconamoon:arrow-top-right-1-thin"
-								class="inline-block w-6 h-6 ml-2"
-							/>
-						</Link>
-					)
-				}
 			</div>
 			<div class="flex w-full flex-col items-center justify-center pt-10">
 				{
@@ -91,7 +74,17 @@ const videoSrc = frontmatter.data?.video
 				}
 				<Prose><slot /></Prose>
 				<div class="mx-auto w-full max-w-3xl pt-20">
-					<Share />
+				<Link
+          href="/contact"
+          class="mt-10"
+          style="button"
+        >
+          {l.visitProject}
+          <Icon
+            name="iconamoon:arrow-top-right-1-thin"
+            class="inline-block w-6 h-6 ml-2"
+          />
+        </Link>
 				</div>
 			</div>
 		</Container>
