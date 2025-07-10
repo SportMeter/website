@@ -1,0 +1,22 @@
+---
+const { content } = Astro.props;
+---
+
+<div class="items-center flex-col text-sm font-medium relative w-full pb-40">
+		<div
+			class="items-center bottom-0 justify-center left-0 absolute top-0 flex w-full h-full overflow-hidden rounded-3xl"
+		>
+		</div>
+	<div class="font-semibold">
+		<div
+			class="auto-cols-fr grid-cols-1 lg:grid-cols-[.6fr_1fr] grid-rows-[auto] grid gap-[1.88rem]"
+		>
+			<div class="col-span-1 row-span-1 text-[2.50rem] leading-none">
+				<div class="items-center flex"><div>Privacy Statment</div></div>
+			</div>
+			<div class="col-span-1 row-span-1 text-3xl">
+				<p set:html={content} />
+			</div>
+		</div>
+	</div>
+</div>
