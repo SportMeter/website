@@ -74,22 +74,6 @@ const { frontmatter } = Astro.props;
 				</p>
 			</div>
 			<div class="flex w-full flex-col items-center justify-center pt-12">
-				<div class="flex flex-wrap justify-center gap-3">
-					{
-						"tags" in frontmatter.data &&
-							frontmatter.data?.tags?.map((tag: unknown) => (
-								<li class="list-none">
-									<Link
-										href={`/tags/${tag}`}
-										size="md"
-										style="outline"
-									>
-										{tag}
-									</Link>
-								</li>
-							))
-					}
-				</div>
 				{
 					"cover" in frontmatter.data && frontmatter.data?.cover && (
 						<Image
