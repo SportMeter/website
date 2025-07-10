@@ -31,25 +31,74 @@ const { sectionTitle,introSection } = Astro.props;
 ---
 
 <div class="text-sm font-medium pt-20 pb-32">
-<div class="items-center text-sm font-medium justify-center flex pt-20 pb-8">
-  <div class="bg-gray-100 rounded-2xl px-4 py-2">
+  <div class="items-center text-sm font-medium justify-center flex pt-20 pb-8">
+    <div class="bg-gray-100 rounded-2xl px-4 py-2">
       <h2 class="text-lg leading-none font-semibold my-1">{sectionTitle}</h2>
+    </div>
+  </div>
+
+  <div class="mt-3.5 text-lg">
+    <div class="flex justify-center items-center">
+      <p
+        class="text-2xl leading-9 font-semibold mb-3"
+        set:html={introSection}
+      />
+    </div>
+  </div>
+
+  <!-- Carousel will be rendered here -->
+  <div id="carousel-container" class="relative w-full overflow-hidden mt-16">
+    <div id="carousel-track" class="flex items-center py-4">
+      <!-- These are placeholder items. You can replace them with your dynamic data. -->
+      <div class="w-40 h-40 bg-gray-300 rounded-full mx-4 flex-shrink-0"></div>
+      <div class="w-40 h-40 bg-gray-300 rounded-full mx-4 flex-shrink-0"></div>
+      <div class="w-40 h-40 bg-gray-300 rounded-full mx-4 flex-shrink-0"></div>
+      <div class="w-40 h-40 bg-gray-300 rounded-full mx-4 flex-shrink-0"></div>
+      <div class="w-40 h-40 bg-gray-300 rounded-full mx-4 flex-shrink-0"></div>
+      <div class="w-40 h-40 bg-gray-300 rounded-full mx-4 flex-shrink-0"></div>
+      <div class="w-40 h-40 bg-gray-300 rounded-full mx-4 flex-shrink-0"></div>
+      <div class="w-40 h-40 bg-gray-300 rounded-full mx-4 flex-shrink-0"></div>
+    </div>
+  </div>
+  <div class="mt-16">
+    <div
+      class="gap-x-[1.88rem] auto-cols-fr grid-cols-1 lg:grid-cols-2 grid-rows-[auto] gap-y-10 grid"
+    >
+      {recentPosts.map((post) => <BlogPreview {post} />)}
+    </div>
   </div>
 </div>
 
-<div class="mt-3.5 text-lg">
-<div class="flex justify-center items-center">
-	<p
-		class="text-2xl leading-9 font-semibold mb-3"
-		set:html={introSection}
-	/>
-</div>
-  </div>
-	<div class="mt-16">
-		<div
-			class="gap-x-[1.88rem] auto-cols-fr grid-cols-1 lg:grid-cols-2 grid-rows-[auto] gap-y-10 grid"
-		>
-			{recentPosts.map((post) => <BlogPreview {post} />)}
-		</div>
-	</div>
-</div>
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  import { LifecycleManager } from "@/utils/lifecycle-manager";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const lm = new LifecycleManager();
+
+  lm.onElementLoaded("carousel-container", (ctx) => {
+    const track = document.getElementById("carousel-track");
+    if (!track) return;
+
+    const items = gsap.utils.toArray(".flex-shrink-0");
+    const itemWidth = items[0].offsetWidth;
+    const totalWidth = itemWidth * items.length;
+
+    // Clone items to create a seamless loop
+    for (let i = 0; i < items.length; i++) {
+      track.appendChild(items[i].cloneNode(true));
+    }
+
+    gsap.to(track, {
+      x: -totalWidth,
+      ease: "none",
+      duration: 20, // Adjust duration for speed
+      repeat: -1, // Infinite loop
+      modifiers: {
+        x: gsap.utils.unitize(x => parseFloat(x) % totalWidth)
+      }
+    });
+  });
+</script>
