@@ -3,6 +3,7 @@ import Container from "@/components/primitives/Container.astro";
 import { getLocalizedSettings } from "@/lib/localization-helpers";
 import { translatePath, unlocalizedUrl } from "@/lib/localization-helpers";
 import { locales } from "site";
+import footerImage from "@/assets/global/footer-image.jpeg";
 
 const currentLocale = Astro.currentLocale;
 
@@ -20,7 +21,7 @@ function isActiveLocale(locale: string): boolean {
 ---
 
 <div
-	style="background-image: url('/src/assets/global/footer-image.jpeg');"
+	style={`background-image: url(${footerImage.src});`}
 	class="flex-col text-sm font-medium justify-end flex bg-cover bg-center"
 >
 	<div class="flex-col text-sm font-medium justify-end pb-10 px-4 lg:px-20 pt-16 flex backdrop-blur-sm">
