@@ -133,6 +133,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 
 <header class="fixed w-full z-30">
 	<div
+		id="main-header"
 		class="items-center auto-cols-fr grid-cols-2 lg:grid-cols-2 grid-rows-[auto] justify-between left-0 py-2 px-6 lg:px-20 right-0 top-0 grid gap-4"
 	>
 		<div
@@ -333,7 +334,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 			})
 				.to("[data-company-name]", { opacity: 0 })
 				.to("#main-header", { backdropFilter: "blur(5px)", "-webkit-backdrop-filter": "blur(5px)" }, "<")
-				.set("#header-logo", { pointerEvents: "none" });
+				
 
 			const tl = gsap.timeline({
 				paused: true,
