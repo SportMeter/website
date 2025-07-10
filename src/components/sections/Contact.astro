@@ -21,12 +21,13 @@ function getFieldName(title: string): string {
 }
 
 interface Props {
+  introSection:string;
 	message: string;
   privacyStatement: string;
 	fields: FormField[];
 }
 
-const { message,privacyStatement, fields } = Astro.props;
+const { introSection, message,privacyStatement, fields } = Astro.props;
 ---
 
 <div
@@ -73,6 +74,9 @@ const { message,privacyStatement, fields } = Astro.props;
 	}"
 >
 	<div class="col-span-1 row-span-1 w-full max-w-3xl">
+    <div class="items-center text-sm font-medium justify-center flex">
+      <h2 class="text-[3.13rem] leading-none font-semibold my-1">{introSection}</h2>
+    </div>
 		<h4 class=" mb-1 mt-10">
 			{message}
 		</h4>

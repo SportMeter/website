@@ -148,6 +148,7 @@ export default defineMarkdocConfig({
     },
     Contact: {
       attributes: {
+        introSection: { type: String, render: "introSection", required: true },
         message: { type: String, render: "message", required: true },
         privacyStatement: {
           type: String,
