@@ -1,6 +1,22 @@
 ---
 import { type CollectionEntry, getCollection } from "astro:content";
 import BlogPreview from "@/components/sections/BlogPreview.astro";
+import { Image } from "astro:assets";
+import bluemarlinsLogo from "@/assets/associations-logo/bluemarlins-logo.png";
+import herculesLogo from "@/assets/associations-logo/hercules-logo.png";
+import hrcLogo from "@/assets/associations-logo/hrc-logo.png";
+import pinokeLogo from "@/assets/associations-logo/pinoke-logo.png";
+import skadiLogo from "@/assets/associations-logo/skadi-logo.png";
+import sslLogo from "@/assets/associations-logo/ssl-logo.png";
+
+const logos = [
+  bluemarlinsLogo,
+  herculesLogo,
+  hrcLogo,
+  pinokeLogo,
+  skadiLogo,
+  sslLogo,
+];
 
 const currentLocale = Astro.currentLocale;
 
@@ -48,16 +64,13 @@ const { sectionTitle,introSection } = Astro.props;
 
   <!-- Carousel will be rendered here -->
   <div id="carousel-container" class="relative w-full overflow-hidden mt-16">
-    <div id="carousel-track" class="flex items-center py-4">
+    <div id="carousel-track" class="flex items-center gap-9 py-4">
       <!-- These are placeholder items. You can replace them with your dynamic data. -->
-      <div class="w-40 h-40 bg-gray-300 rounded-full mx-4 flex-shrink-0"></div>
-      <div class="w-40 h-40 bg-gray-300 rounded-full mx-4 flex-shrink-0"></div>
-      <div class="w-40 h-40 bg-gray-300 rounded-full mx-4 flex-shrink-0"></div>
-      <div class="w-40 h-40 bg-gray-300 rounded-full mx-4 flex-shrink-0"></div>
-      <div class="w-40 h-40 bg-gray-300 rounded-full mx-4 flex-shrink-0"></div>
-      <div class="w-40 h-40 bg-gray-300 rounded-full mx-4 flex-shrink-0"></div>
-      <div class="w-40 h-40 bg-gray-300 rounded-full mx-4 flex-shrink-0"></div>
-      <div class="w-40 h-40 bg-gray-300 rounded-full mx-4 flex-shrink-0"></div>
+      {logos.map((logo) => (
+        <div class="w-40 h-40 bg-white-300 mx-4 flex-shrink-0">
+          <Image src={logo} alt="logo" class="w-full h-full object-contain" />
+        </div>
+      ))}
     </div>
   </div>
   <div class="mt-16">
