@@ -1,8 +1,8 @@
-import { handleRequest } from '@keystatic/astro/internal/keystatic-api.js';
+import { all } from '@keystatic/astro/internal/keystatic-api.js';
 import type { APIContext } from 'astro';
 
 export async function GET(context: APIContext) {
-  // The handleRequest function from keystatic-api.js expects the request
+  // The all function from keystatic-api.js expects the request
   // to be relative to its base path, which is /api/keystatic.
   // So, we need to rewrite the URL path for the internal handler.
   const originalUrl = new URL(context.request.url);
@@ -16,5 +16,5 @@ export async function GET(context: APIContext) {
     body: context.request.body,
   });
 
-  return handleRequest(newRequest);
+  return all(newRequest);
 }
