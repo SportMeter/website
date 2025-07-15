@@ -1,0 +1,26 @@
+---
+import { loadVideo } from "@/lib/asset-helpers";
+
+export interface Props {
+  src: string;
+  class?: string;
+}
+
+const { src, class: className } = Astro.props;
+
+const videoSrc = await loadVideo(src);
+---
+
+{
+  videoSrc && (
+    <video
+      class:list={[className, "w-full rounded-lg"]}
+      src={videoSrc}
+      autoplay
+      loop
+      muted
+      playsinline
+      controls
+    />
+  )
+}

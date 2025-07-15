@@ -806,11 +806,30 @@ export default config({
           options: {
             heading: [2, 3, 4, 5, 6],
             image: {
-              directory: "src/assets/posts",
-              publicPath: "/src/assets/posts/",
+              directory: "src/assets/works",
+              publicPath: "@/assets/works/",
             },
           },
-          components: {},
+          components: {
+            Video: block({
+              label: "Video",
+              description: "Embed a video",
+              icon: GeneralIcon({ ariaHidden: true }),
+              schema: {
+                src: fields.file({
+                  label: "Video file",
+                  directory: "src/assets/works",
+                  publicPath: "@/assets/works/",
+                  validation: {
+                    isRequired: true,
+                  },
+                }),
+                class: fields.text({
+                  label: "Custom classes",
+                }),
+              },
+            }),
+          },
         }),
       },
     }),
