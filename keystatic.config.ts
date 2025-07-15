@@ -682,6 +682,7 @@ export default config({
             isRequired: true,
           },
         }),
+        category: fields.text({ label: "Category" }),
         author: fields.relationship({
           label: "Author",
           description: "Auteur van het artikel",
@@ -778,6 +779,11 @@ export default config({
         }),
         cover: fields.image({
           label: "Cover Image",
+          directory: "src/assets/works",
+          publicPath: "@/assets/works/",
+        }),
+        headerCover: fields.image({
+          label: "Header Cover Image",
           directory: "src/assets/works",
           publicPath: "@/assets/works/",
         }),
