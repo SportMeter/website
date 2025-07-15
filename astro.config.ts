@@ -53,8 +53,8 @@ export default defineConfig({
     }),
     AstroPWA({
       mode: import.meta.env.PROD ? "production" : "development",
-      base: "/",
-      scope: "/",
+      base: "/keystatic/",
+      scope: "/keystatic/",
       includeAssets: ["favicon.svg"],
       registerType: "autoUpdate",
       injectRegister: false,
