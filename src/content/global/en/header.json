@@ -12,6 +12,10 @@
       "link": "/works"
     },
     {
+      "title": "About us",
+      "link": "/about"
+    },
+    {
       "title": "Register Pilot",
       "link": "/contact"
     }
