@@ -107,7 +107,8 @@ Sent from SportMeter contact form
         headers: {
           "Content-Type": "application/json",
           "X-Api-Key": API_KEY_MAILCHANNELS,
-          "X-MailChannels-SenderId": "soothdev",
+          "X-MailChannels-Auth-Id": "soothdev",
+          "X-MailChannels-SenderId": "soothdev|x-authuser|soothdev",
         },
         body: JSON.stringify(emailRequest),
       }
