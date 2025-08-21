@@ -1,8 +1,11 @@
 ---
 import { Image } from "astro:assets";
 import about from "@/assets/pages/about/about.png";
+import { Icon } from "astro-icon/components";
+import Link from "@/components/primitives/Link.astro";
 
 const { title, subtitle, content } = Astro.props;
+const locale = Astro.currentLocale || "nl";
 ---
 
 <section class="relative w-full pb-40">
@@ -30,6 +33,21 @@ const { title, subtitle, content } = Astro.props;
         <p set:html={subtitle} />
         <p set:html={content} />
       </div>
+    </div>
+
+    <!-- Contact Button -->
+    <div class="mt-8 lg:mt-12">
+				<Link
+          href="/contact"
+          class="mt-10"
+          style="button"
+        >
+        {locale === "en" ? "Get in Touch" : "Neem Contact Op"}
+          <Icon
+            name="iconamoon:arrow-top-right-1-thin"
+            class="inline-block w-6 h-6 ml-2"
+          />
+        </Link>
     </div>
   </div>
 </section>
