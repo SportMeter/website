@@ -1,0 +1,34 @@
+---
+title: Feedback
+type: informational
+lastUpdateDate: 2024-03-09
+hideTitle: false
+addPadding: false
+seo:
+  title: "SportMeter Feedback"
+  description: Help ons SportMeter te verbeteren
+  author: SportMeter
+---
+
+{% Container %}
+
+{% Feedback
+  introSection="We horen graag van je!"
+  message="Jouw feedback helpt ons SportMeter beter te maken. Deel je ervaring met ons."
+  privacyStatement="Je contactgegevens gebruiken we alleen om op je feedback te reageren"
+  fields=[
+    {title: "Ben je speler of trainer?", type: "select", required: true, options: [
+      {value: "speler", label: "Speler"},
+      {value: "trainer", label: "Trainer/Coach"}
+    ]},
+    {title: "Heb je een klacht of verbetering?", type: "select", required: true, options: [
+      {value: "klacht", label: "Klacht"},
+      {value: "verbetering", label: "Verbetering"}
+    ]},
+    {title: "Wat is je bericht?", placeholder: "Vertel ons wat er beter kan...", type: "textarea", width: 2, required: true},
+    {title: "Contact informatie", placeholder: "E-mail of telefoon zodat we contact kunnen opnemen", type: "text", required: true},
+    {title: "Verstuur feedback", type: "submit", width: 2}
+  ]
+/%}
+
+{% /Container %}
