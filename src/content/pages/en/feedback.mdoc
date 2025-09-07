@@ -15,18 +15,18 @@ seo:
 {% Feedback
   introSection="We'd love to hear from you!"
   message="Your feedback helps us make SportMeter better. Share your experience with us."
-  privacyStatement="Your contact details will only be used to respond to your feedback"
+  privacyStatement="We only use your contact details to respond to your feedback"
   fields=[
-    {title: "Are you a player or coach?", type: "select", required: true, options: [
-      {value: "player", label: "Player"},
+    {title: "Are you an athlete or coach?", type: "select", required: true, options: [
+      {value: "athlete", label: "Athlete"},
       {value: "coach", label: "Coach"}
     ]},
-    {title: "Do you have a complaint or improvement?", type: "select", required: true, options: [
-      {value: "complaint", label: "Complaint"},
-      {value: "improvement", label: "Improvement"}
+    {title: "What type of request would you like to submit?", type: "select", required: true, options: [
+      {value: "feedback", label: "Feedback"},
+      {value: "privacy-request", label: "Privacy Request"}
     ]},
-    {title: "What is the message?", placeholder: "Tell us what could be better...", type: "textarea", width: 2, required: true},
-    {title: "Contact so we can reach out", placeholder: "Email or phone so we can reach out", type: "text", required: true},
+    {title: "Explanation of your request:", placeholder: "Do you have feedback? We'd love to hear from you...", type: "textarea", width: 2, required: true},
+    {title: "How may we contact you?", placeholder: "Email or phone number", type: "text", required: true},
     {title: "Send feedback", type: "submit", width: 2}
   ]
 /%}
