@@ -1,31 +1,31 @@
 ---
 import Button from "@/components/primitives/Button.astro";
-import { type FeedbackField } from "@/types/feedback";
+import {type FormField, type HTMLInputTypeAttribute } from "@/types/contact";
 
 // Helper function to generate field names from titles
 function getFieldName(title: string): string {
 	const fieldMap: Record<string, string> = {
-		"Ben je speler of trainer?": "role",
-		"Are you a player or coach?": "role",
-		"Heb je een klacht of verbetering?": "feedbackType",
-		"Do you have a complaint or improvement?": "feedbackType",
-		"Wat is je bericht?": "message",
-		"What is the message?": "message",
-		"Contact informatie": "contact",
-		"Contact so we can reach out": "contact"
+		"Ben je sporter of trainer?": "role",
+		"Are you an athlete or coach?": "role",
+		"Wat voor type verzoek wil je indienen?": "requestType",
+		"What type of request would you like to submit?": "requestType",
+		"Toelichting van je verzoek:": "message",
+		"Explanation of your request:": "message",
+		"Hoe mogen we je contacten?": "contact",
+		"How may we contact you?": "contact"
 	};
 
 	return fieldMap[title] || title.toLowerCase().replace(/\s+/g, '');
 }
 
 interface Props {
-  introSection: string;
+  introSection:string;
 	message: string;
   privacyStatement: string;
-	fields: FeedbackField[];
+	fields: FormField[];
 }
 
-const { introSection, message, privacyStatement, fields } = Astro.props;
+const { introSection, message,privacyStatement, fields } = Astro.props;
 ---
 
 <div class="items-center gap-x-[6.25rem] pb-40 auto-cols-fr justify-center flex">
@@ -66,7 +66,7 @@ const { introSection, message, privacyStatement, fields } = Astro.props;
 											required={field.required}
 											class="text-zinc-800 cursor-pointer py-4 w-full h-14 min-h-[3.50rem] border-2 border-black border-solid rounded-md m-0 bg-white"
 										>
-											<option value="">Selecteer...</option>
+											<option value="">{field.placeholder || "Selecteer..."}</option>
 											{field.options?.map(option => (
 												<option value={option.value}>{option.label}</option>
 											))}
@@ -94,7 +94,7 @@ const { introSection, message, privacyStatement, fields } = Astro.props;
 											{field.title}
 										</p>
 										<input
-											type={field.type}
+											type={field.type as HTMLInputTypeAttribute}
 											name={getFieldName(field.title)}
 											required={field.required}
 											placeholder={field.placeholder}

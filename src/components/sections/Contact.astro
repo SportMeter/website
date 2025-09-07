@@ -57,6 +57,24 @@ const { introSection, message,privacyStatement, fields } = Astro.props;
 										{field.title}
 									</Button>
 								);
+							} else if (field.type === "select") {
+								return (
+									<div class:list={["text-base", field.width == 2 && "sm:col-span-2"]}>
+										<p class="text-black font-semibold max-w-full mb-3">
+											{field.title}
+										</p>
+										<select
+											name={getFieldName(field.title)}
+											required={field.required}
+											class="text-zinc-800 cursor-pointer py-4 w-full h-14 min-h-[3.50rem] border-2 border-black border-solid rounded-md m-0 bg-white"
+										>
+											<option value="">{field.placeholder || "Selecteer..."}</option>
+											{field.options?.map(option => (
+												<option value={option.value}>{option.label}</option>
+											))}
+										</select>
+									</div>
+								);
 							} else if (field.type === "textarea") {
 								return (
 									<div class:list={["text-base", field.width == 2 && "sm:col-span-2"]}>
