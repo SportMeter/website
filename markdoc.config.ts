@@ -133,9 +133,7 @@ export default defineMarkdocConfig({
 			render: component("./src/components/sections/About.astro"),
 		},
 		Privacy: {
-			attributes: {
-				content: { type: String, render: "content", required: true },
-			},
+			attributes: {},
 			render: component("./src/components/sections/Privacy.astro"),
 		},
 		Works: {

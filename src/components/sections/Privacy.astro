@@ -1,22 +1,150 @@
 ---
-const { content } = Astro.props;
+// No props needed - content is hardcoded
 ---
 
-<div class="items-center flex-col text-sm font-medium relative w-full pb-40">
-		<div
-			class="items-center bottom-0 justify-center left-0 absolute top-0 flex w-full h-full overflow-hidden rounded-3xl"
-		>
-		</div>
-	<div class="font-semibold">
-		<div
-			class="auto-cols-fr grid-cols-1 lg:grid-cols-[.6fr_1fr] grid-rows-[auto] grid gap-[1.88rem]"
-		>
-			<div class="col-span-1 row-span-1 text-[2.50rem] leading-none">
-				<div class="items-center flex"><div>Privacy Statment</div></div>
-			</div>
-			<div class="col-span-1 row-span-1 text-3xl">
-				<p set:html={content} />
-			</div>
-		</div>
-	</div>
+<div class="relative w-full pb-40">
+  <div class="max-w-4xl mx-auto px-6">
+    <div class="mb-12">
+      <h1 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+        Privacyverklaring SportMeter
+      </h1>
+      <p class="text-lg text-gray-600">
+        Versie 1.0 — Datum: 8 september 2025
+      </p>
+    </div>
+    
+    <div class="prose prose-lg max-w-none">
+      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">1. Inleiding</h2>
+      <p class="text-gray-700 mb-6">
+        Bij <strong>SportMeter</strong> vinden we jouw privacy ontzettend belangrijk. In deze privacyverklaring leggen we uit welke persoonsgegevens we verzamelen, waarom we dat doen en hoe we jouw gegevens beschermen.
+      </p>
+
+      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">2. Wie zijn wij?</h2>
+      <p class="text-gray-700 mb-4">
+        SportMeter ontwikkelt en beheert een platform dat sporters en coaches helpt om prestaties te meten, te volgen en te verbeteren.
+      </p>
+      <div class="bg-gray-50 p-4 rounded-lg mb-6">
+        <p class="font-semibold text-gray-900 mb-2">Onze contactgegevens:</p>
+        <p class="text-gray-700">
+          SportMeter<br>
+          Hugo de Grootstraat 9<br>
+          KvK-nummer: 95134026<br>
+          E-mailadres: info@sportmeter.nl
+        </p>
+      </div>
+
+      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">3. Welke gegevens verzamelen wij?</h2>
+      <p class="text-gray-700 mb-4">
+        Wij verzamelen alleen de informatie die nodig is om je een veilige en betrouwbare ervaring met SportMeter te bieden.
+      </p>
+      <p class="text-gray-700 mb-4">Dit kan omvatten:</p>
+      <ul class="space-y-4 mb-6">
+        <li class="text-gray-700">
+          <strong class="text-gray-900">Accountinformatie:</strong> naam, e-mailadres en telefoonnummer.
+        </li>
+        <li class="text-gray-700">
+          <strong class="text-gray-900">Ingevoerde meetgegevens:</strong> gegevens die je zelf invoert in SportMeter, zoals numerieke scores, gekozen opties of vrije tekstantwoorden.
+        </li>
+        <li class="text-gray-700">
+          <strong class="text-gray-900">Gezondheidsgerelateerde gegevens (optioneel):</strong> zoals ervaren inspanningsniveaus (RPE-scores) of lichaamsgewicht. Deze gegevens worden alleen verwerkt met jouw uitdrukkelijke toestemming. Omdat dit volgens de AVG kan worden gezien als <strong>gezondheidsgegevens</strong>, verwerken wij deze informatie alleen onder de volgende voorwaarden: (1) Je vult deze gegevens <strong>vrijwillig</strong> in; zonder jouw invoer worden ze niet verzameld. (2) Wij verwerken deze gegevens uitsluitend voor de doeleinden die in deze privacyverklaring zijn beschreven, zoals het ondersteunen van jouw leerproces en het monitoren van voortgang. (3) De verwerking gebeurt op basis van jouw <strong>uitdrukkelijke toestemming</strong>, die je op elk moment kunt intrekken.
+        </li>
+        <li class="text-gray-700">
+          <strong class="text-gray-900">Pilotbijdragen:</strong> eventuele feedback, opmerkingen of suggesties die je tijdens een pilot met ons deelt.
+        </li>
+        <li class="text-gray-700">
+          <strong class="text-gray-900">Gebruik van het tool:</strong> inloggegevens, sessies, technische data (bijv. IP-adres, browserinformatie).
+        </li>
+      </ul>
+
+      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">4. Waarom verwerken wij deze gegevens?</h2>
+      <p class="text-gray-700 mb-4">Wij gebruiken je gegevens om:</p>
+      <ul class="list-disc list-inside space-y-2 mb-6 text-gray-700">
+        <li>Je toegang te geven tot de tool en je account te beheren.</li>
+        <li>De functionaliteit van SportMeter te bieden en te verbeteren.</li>
+        <li>Een betrouwbare en veilige omgeving voor jou en andere deelnemers te waarborgen.</li>
+        <li>Coaches te ondersteunen bij het begeleiden en monitoren van jouw sportplezier.</li>
+        <li>Facturen op te stellen en betalingen te verwerken (indien van toepassing).</li>
+        <li>Te voldoen aan wettelijke verplichtingen.</li>
+      </ul>
+      <p class="text-gray-700 mb-6">
+        <strong class="text-gray-900">Grondslag voor verwerking:</strong> De verwerking van jouw gegevens is noodzakelijk voor de uitvoering van de dienst overeenkomst met jouw sportvereniging.
+      </p>
+
+      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">5. Hoe beschermen wij jouw gegevens?</h2>
+      <p class="text-gray-700 mb-4">
+        Wij nemen passende technische en organisatorische maatregelen om je gegevens te beschermen, zoals:
+      </p>
+      <ul class="list-disc list-inside space-y-2 mb-6 text-gray-700">
+        <li>Beveiligde (SSL) verbindingen.</li>
+        <li>Strikte toegangscontrole op onze systemen.</li>
+        <li>Regelmatige back-ups.</li>
+      </ul>
+
+      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">6. Delen wij jouw gegevens?</h2>
+      <p class="text-gray-700 mb-4">Wij delen jouw gegevens alleen:</p>
+      <ul class="list-disc list-inside space-y-2 mb-6 text-gray-700">
+        <li>Met vertrouwde dienstverleners die ons helpen bij het functioneren van SportMeter, zoals cloud provider Google. Gegevens kunnen hierdoor buiten de EU worden opgeslagen.</li>
+        <li>Wanneer dit wettelijk verplicht is, bijvoorbeeld om te voldoen aan wet- of regelgeving.</li>
+        <li>Alleen als jij er zelf voor kiest om informatie openbaar te delen, bijvoorbeeld door feedback of opmerkingen te geven binnen het platform.</li>
+      </ul>
+      <p class="text-gray-700 mb-6">
+        We verkopen jouw gegevens <strong>nooit</strong> aan derden.
+      </p>
+
+      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">7. Toestemming voor gezondheidsgegevens</h2>
+      <p class="text-gray-700 mb-4">
+        Voor gezondheidsgerelateerde gegevens wordt expliciete toestemming gevraagd via een <strong>informed consent</strong> in de app-stores.<br>
+        Je kunt deze toestemming op elk moment intrekken via:
+      </p>
+      <ul class="list-disc list-inside space-y-2 mb-6 text-gray-700">
+        <li>Je profielpagina in de app</li>
+        <li>Of via <a href="https://www.veiligevereniging.nl/" class="text-blue-600 hover:text-blue-800 underline">www.veiligevereniging.nl</a></li>
+      </ul>
+      <p class="text-gray-700 mb-6">
+        Zonder jouw toestemming worden deze gegevens niet verwerkt.
+      </p>
+
+      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">8. Jouw rechten</h2>
+      <p class="text-gray-700 mb-4">Je hebt recht op:</p>
+      <ul class="list-disc list-inside space-y-2 mb-6 text-gray-700">
+        <li>Inzage in je persoonsgegevens.</li>
+        <li>Correctie van je gegevens.</li>
+        <li>Verwijdering van je gegevens ("recht om vergeten te worden").</li>
+        <li>Bezwaar tegen verwerking.</li>
+        <li>Overdraagbaarheid van je gegevens.</li>
+      </ul>
+      <p class="text-gray-700 mb-6">
+        Wil je gebruik maken van een van deze rechten? Stuur dan een e-mail naar info@sportmeter.nl. We reageren altijd binnen 30 dagen.
+      </p>
+
+      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">9. Bewaartermijnen</h2>
+      <p class="text-gray-700 mb-4">We bewaren jouw gegevens:</p>
+      <ul class="list-disc list-inside space-y-2 mb-6 text-gray-700">
+        <li>Zolang de pilot loopt bij de vereniging. Na max 3 maanden zullen alle gegevens verwijderd worden.</li>
+        <li>De gegevens die via de website - <a href="http://veiligevereniging.nl/" class="text-blue-600 hover:text-blue-800 underline">veiligevereniging.nl</a> - worden ingevuld, zullen bewaard worden volgens de wettelijke bewaartermijnen.</li>
+      </ul>
+      <p class="text-gray-700 mb-6">
+        Daarna worden je gegevens veilig verwijderd.
+      </p>
+
+      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">10. Wijzigingen</h2>
+      <p class="text-gray-700 mb-6">
+        Deze privacyverklaring kan worden aangepast. Bij belangrijke wijzigingen informeren we je daar natuurlijk tijdig over.
+      </p>
+
+      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">11. Vragen of klachten?</h2>
+      <p class="text-gray-700 mb-4">
+        Heb je vragen of klachten over hoe wij met je gegevens omgaan? Neem contact met ons op via info@sportmeter.nl.
+      </p>
+      <p class="text-gray-700 mb-6">
+        Ben je niet tevreden met onze reactie? Dan kun je terecht bij de <strong>Autoriteit Persoonsgegevens</strong>.
+      </p>
+
+      <div class="bg-blue-50 p-6 rounded-lg mt-8">
+        <p class="text-lg font-semibold text-blue-900 text-center">
+          SportMeter – Veilig omgaan met jouw gegevens, dat vinden wij vanzelfsprekend.
+        </p>
+      </div>
+    </div>
+  </div>
 </div>
