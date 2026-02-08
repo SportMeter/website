@@ -2,67 +2,66 @@
 title: Homepage
 subtitle: Homepage
 type: informational
-lastUpdateDate: 2025-06-23
+lastUpdateDate: 2026-02-08
 hideTitle: true
 addPadding: false
 seo:
-  title: SportMeter
-  description: Vooruitgang begint met plezier!
-  author: SportMeter
+title: SportMeter
+description: Progress starts with enjoyment!
+author: SportMeter
 ---
 
 {% Hero
-   title="Together, we give our club its true colors"
-   subtitle="We are SportMeter. The go-to tool that helps clubs grow by putting joy at the heart of everything they do. Ready to build a safe and connected community within your club?"
-   buttons=[{title: "Yes, I want to participate!", href: "#ContactLanding", style: "button", icon: "iconamoon:arrow-top-right-1-thin"}] /%}
+title="Together we bring colour to our club"
+subtitle="We are SportMeter. The tool that helps clubs grow by bringing well-being and performance together. Discover how quick, recurring check-ins make a big difference."
+buttons=[{title: "Yes, count me in!", href: "#ContactLanding", style: "button", icon: "iconamoon:arrow-top-right-1-thin"}] /%}
 
 {% Container %}
 
 {% RecentWork
-   sectionTitle="Where to begin"
-   introSection="See how we make every voice count <span class=\"text-neutral-400\">– even the quiet ones.</span>"
+sectionTitle="Our starting point"
+introSection="See below how we provide insight into what's really going on <span class=\"text-neutral-400\">– for athletes, coaches, volunteers and board members.</span>"
 /%}
-
 
 {% Services
-   sectionTitle="How the pilot works"
-   introSection="Turn your policy into action with us <span class=\"text-neutral-400\">– in 3 concrete steps.</span>"
-   services=[
-    { 
-      title: "Share your starting point",
-      description: "Choose the tool that fits your current situation and discover where you stand as a team or as a club. From this shared insight, new energy emerges — among players, coaches, and board members alike.",
-      icon: "/src/assets/pages/homepage/icon-number-1.png"
-    },
-    { 
-      title: "Connect coaches, teams, and the board",
-      description: "Our tools help everyone get moving — both literally and figuratively. Coaches activate their teams on the field, while board members focus on creating an environment where enjoyment, openness, and engagement can thrive. It’s not a short sprint, but a shared journey we take together.",
-      icon: "/src/assets/pages/homepage/icon-number-2.png"
-    }, 
-    { 
-      title: "Start, learn, and grow together",
-      description: "After a short onboarding, your group gets started. We track progress, share insights, and celebrate growth. By learning and moving together, your club steadily grows into a more vibrant, connected, and future-ready sports community.",
-      icon: "/src/assets/pages/homepage/icon-number-3.png"
-    }]
+sectionTitle="How the pilot works"
+introSection="Turn policy into action with us <span class=\"text-neutral-400\">– in 3 concrete steps.</span>"
+services=[
+{
+title: "Share your starting point",
+description: "Which themes matter most to your club? Think of training load, enjoyment, mental health or mutual involvement. You set the focus — we help make it measurable.",
+icon: "/src/assets/pages/homepage/icon-number-1.png"
+},
+{
+title: "Structure looking out for each other",
+description: "With weekly check-ins, looking out for each other gets a permanent place within the club. Coaches, volunteers and board members keep a finger on the pulse together — not occasionally, but structurally. This keeps the connection between members strong, even when things get busy.",
+icon: "/src/assets/pages/homepage/icon-number-2.png"
+},
+{
+title: "Safeguard your club culture",
+description: "After a short onboarding, your club gets started. We track progress and share insights. By making trends visible in the themes that matter to you, your club grows step by step towards an environment where performance and well-being go hand in hand.",
+icon: "/src/assets/pages/homepage/icon-number-3.png"
+}]
 /%}
 
-{% BlogLatest 
-  sectionTitle="Collaborations" 
-  introSection="Discover how partner clubs use our meters <span class=\"text-neutral-400\">— and why they choose them.</span>" 
+{% BlogLatest
+sectionTitle="Partnerships"
+introSection="Discover what partner clubs use our meters for <span class=\"text-neutral-400\">– and why they choose to do so.</span>"
 /%}
 
 {% CantactLanding
-  sectionTitle="Contact"
-  introSection="Ready to join us?"
-  message="Leave your name and contact details, and we’ll explore together how SportMeter can work for your club."
-  privacyStatement="Your contact details will only be used for updates about the SportMeter pilots. More information can be found in our privacy policy."
-  fields=[
-    {title: "Full name", placeholder: "Janneke Slinger", required: true, type: "text"},
-    {title: "Email", placeholder: "contact@email.com", required: true, type: "email"},
-    {title: "Phone", placeholder: "+316 37 11 22 33", type: "tel"},
-    {title: "Preferred call time", placeholder: "from 10:00 til 16:00", type: "text"},
-    {title: "Message", placeholder: "Write your message here", type: "textarea", width: 2},
-    {title: "Send", type: "submit", width: 2}
-  ]
+sectionTitle="Contact"
+introSection="Ready to join?"
+message="Leave your name and contact details, and we'll look together at how we can deploy SportMeter for your club."
+privacyStatement="We only use your contact details for updates about the SportMeter pilots. More information can be found in our privacy policy."
+fields=[
+{title: "Full name", placeholder: "Jane Smith", required: true, type: "text"},
+{title: "Email", placeholder: "contact@email.com", required: true, type: "email"},
+{title: "Phone", placeholder: "+316 37 11 22 33", type: "tel"},
+{title: "Preferred call time", placeholder: "10:00 AM to 4:00 PM", type: "text"},
+{title: "Message", placeholder: "Write your message here", type: "textarea", width: 2},
+{title: "Submit", type: "submit", width: 2}
+]
 /%}
 
 {% /Container %}
