@@ -6,24 +6,12 @@ hideTitle: false
 addPadding: false
 seo:
   title: "Contact Sportmeter"
-  description: Vooruitgang begint met plezier!
+  description: Progress starts with enjoyment!
   author: SportMeter
 ---
 
 {% Container %}
 
-{% Contact
-  introSection="Ready to join?"
-  message="Leave your name and contact details, and we’ll explore together how SportMeter can work for your club."
-  privacyStatement="Your contact details will only be used for updates about the SportMeter pilots. More information can be found in our privacy policy."
-  fields=[
-    {title: "Full name", placeholder: "Janneke Slinger", required: true, type: "text"},
-    {title: "Email", placeholder: "contact@email.com", required: true, type: "email"},
-    {title: "Phone", placeholder: "+316 37 11 22 33", type: "tel"},
-    {title: "Preferred call time", placeholder: "from 10:00 til 16:00", type: "text"},
-    {title: "Message", placeholder: "Write your message here", type: "textarea", width: 2},
-    {title: "Send", type: "submit", width: 2}
-  ]
-/%}
+{% ContactSales /%}
 
 {% /Container %}

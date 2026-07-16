@@ -159,6 +159,10 @@ export default defineMarkdocConfig({
       },
       render: component("./src/components/sections/Contact.astro"),
     },
+    ContactSales: {
+      attributes: {},
+      render: component("./src/components/sections/ContactSales.astro"),
+    },
     Video: {
       attributes: {
         src: { type: String, render: "src", required: true },

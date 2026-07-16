@@ -613,6 +613,12 @@ export default config({
               icon: GeneralIcon({ ariaHidden: true }),
               schema: {},
             }),
+            ContactSales: block({
+              label: "Contact (Sales)",
+              description: "Upgraded contact form with self/other toggle — locale-aware, no config needed",
+              icon: ContactIcon({ ariaHidden: true }),
+              schema: {},
+            }),
             Contact: block({
               label: "Contact",
               description: "Contact form section",
