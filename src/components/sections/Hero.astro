@@ -114,15 +114,21 @@ const { title, subtitle, buttons = defaultButtons } = Astro.props;
 	}
 </style>
 
+<noscript>
+	<style>
+		[data-hero-reveal] {
+			opacity: 1 !important;
+			filter: none !important;
+		}
+	</style>
+</noscript>
+
 <script>
 	import { gsap } from "gsap";
 	import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 	import { BlurPlugin } from "@/utils/gsap-blur";
-	import { LifecycleManager } from "@/utils/lifecycle-manager";
 
 	gsap.registerPlugin(ScrollToPlugin, BlurPlugin);
-
-	const lm = new LifecycleManager();
 
 	function scrollDown() {
 		gsap.to(window, { duration: 0.5, scrollTo: "#services" });
@@ -131,20 +137,31 @@ const { title, subtitle, buttons = defaultButtons } = Astro.props;
 		gsap.to(window, { duration: 0.8, scrollTo: "#ContactLanding" });
 	}
 
-	lm.onElementLoaded("hero", (ctx) => {
-		ctx?.add(() => {
-			const scrollDownButton =
-				document.getElementById("scroll-down-button");
-      const contactButton = document.getElementById("contact-landing-button")
+	function revealHero() {
+		const hero = document.getElementById("hero");
+		// dataset guard: astro:page-load also fires on the initial visit,
+		// after we have already revealed — don't run twice on the same element
+		if (!hero || hero.dataset.revealed) return;
+		hero.dataset.revealed = "true";
 
-			scrollDownButton?.addEventListener("click", scrollDown);
-      contactButton?.addEventListener("click",scrollDownContact)
+		document
+			.getElementById("scroll-down-button")
+			?.addEventListener("click", scrollDown);
+		document
+			.getElementById("contact-landing-button")
+			?.addEventListener("click", scrollDownContact);
 
-			gsap.to("[data-hero-reveal]", {
-				blur: 0,
-				duration: 1,
-				opacity: 1,
-			});
+		gsap.to("[data-hero-reveal]", {
+			blur: 0,
+			duration: 1,
+			opacity: 1,
 		});
-	});
+	}
+
+	// Reveal as soon as the DOM is parsed. astro:page-load waits for window
+	// "load" (all images/video fetched), which on slow mobile connections
+	// keeps the hero text invisible for seconds.
+	revealHero();
+	// Still needed for client-side navigations back to this page
+	document.addEventListener("astro:page-load", revealHero);
 </script>
