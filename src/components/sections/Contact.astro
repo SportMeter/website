@@ -30,10 +30,10 @@ interface Props {
 const { introSection, message,privacyStatement, fields } = Astro.props;
 ---
 
-<div class="items-center gap-x-[6.25rem] pb-40 auto-cols-fr justify-center flex">
+<div class="items-center gap-x-[6.25rem] pb-20 md:pb-40 auto-cols-fr justify-center flex">
 	<div class="col-span-1 row-span-1 w-full max-w-3xl">
     <div class="items-center text-sm font-medium justify-center flex">
-      <h2 class="text-[3.13rem] leading-none font-semibold my-1">{introSection}</h2>
+      <h2 class="text-4xl md:text-[3.13rem] leading-none font-semibold my-1">{introSection}</h2>
     </div>
 		<h4 class=" mb-1 mt-10">
 			{message}

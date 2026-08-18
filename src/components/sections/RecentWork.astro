@@ -31,7 +31,7 @@ interface Props {
 
 const { sectionTitle,introSection } = Astro.props as Props;
 ---
-<div class="items-center text-sm font-medium justify-center flex pt-20 pb-8">
+<div class="items-center text-sm font-medium justify-center flex pt-10 md:pt-20 pb-8">
   <div class="bg-gray-100 rounded-2xl px-4 py-2">
     <h2 class="text-lg leading-none font-semibold my-1">{sectionTitle}</h2>
   </div>
@@ -45,7 +45,7 @@ const { sectionTitle,introSection } = Astro.props as Props;
 </div>
 
 <div
-  class="text-sm font-medium auto-cols-fr grid-cols-1 md:grid-cols-2 grid-rows-[auto_auto] grid gap-[3.13rem]"
+  class="text-sm font-medium auto-cols-fr grid-cols-1 md:grid-cols-2 grid-rows-[auto_auto] grid gap-8 md:gap-[3.13rem]"
 >
   {recentWorks.map((work) => <WorkPreview {work} />)}
 </div>
