@@ -8,15 +8,11 @@
       "link": "/"
     },
     {
-      "title": "Our meters",
-      "link": "/works"
-    },
-    {
       "title": "About us",
       "link": "/about"
     },
     {
-      "title": "Register pilot",
+      "title": "Sign up",
       "link": "/contact"
     }
   ],
