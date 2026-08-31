@@ -1,15 +1,14 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import PostLayout from "@/layouts/PostLayout.astro";
-import { getCollectionStaticPaths } from "@/lib/collection-helpers";
-import { defaultLocale } from "site.config";
+import { getPrefixedCollectionStaticPaths } from "@/lib/collection-helpers";
 
 export interface Props {
 	data: CollectionEntry<"posts">;
 }
 
 export async function getStaticPaths() {
-	return await getCollectionStaticPaths("posts", defaultLocale);
+	return await getPrefixedCollectionStaticPaths("posts", "nl");
 }
 
 const { data: post } = Astro.props;

@@ -2,13 +2,14 @@
 import type { CollectionEntry } from "astro:content";
 import WorkLayout from "@/layouts/WorkLayout.astro";
 import { getCollectionStaticPaths } from "@/lib/collection-helpers";
+import { defaultLocale } from "site.config";
 
 export interface Props {
 	data: CollectionEntry<"works">;
 }
 
 export async function getStaticPaths() {
-  return await getCollectionStaticPaths("works", "nl");
+	return await getCollectionStaticPaths("works", defaultLocale);
 }
 
 const { data: work } = Astro.props;
