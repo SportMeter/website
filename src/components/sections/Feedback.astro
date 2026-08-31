@@ -1,0 +1,113 @@
+---
+import Button from "@/components/primitives/Button.astro";
+import {type FormField, type HTMLInputTypeAttribute } from "@/types/contact";
+
+// Helper function to generate field names from titles
+function getFieldName(title: string): string {
+	const fieldMap: Record<string, string> = {
+		"Ben je sporter of trainer?": "role",
+		"Are you an athlete or coach?": "role",
+		"Wat voor type verzoek wil je indienen?": "requestType",
+		"What type of request would you like to submit?": "requestType",
+		"Toelichting van je verzoek:": "message",
+		"Explanation of your request:": "message",
+		"Hoe mogen we je contacten?": "contact",
+		"How may we contact you?": "contact"
+	};
+
+	return fieldMap[title] || title.toLowerCase().replace(/\s+/g, '');
+}
+
+interface Props {
+  introSection:string;
+	message: string;
+  privacyStatement: string;
+	fields: FormField[];
+}
+
+const { introSection, message,privacyStatement, fields } = Astro.props;
+---
+
+<div class="items-center gap-x-[6.25rem] pb-20 md:pb-40 auto-cols-fr justify-center flex">
+	<div class="col-span-1 row-span-1 w-full max-w-3xl">
+    <div class="items-center text-sm font-medium justify-center flex">
+      <h2 class="text-4xl md:text-[3.13rem] leading-none font-semibold my-1">{introSection}</h2>
+    </div>
+		<h4 class=" mb-1 mt-10">
+			{message}
+		</h4>
+		<div class="mt-8">
+			<div class="mt-0 mx-0 mb-3.5">
+				<form name="feedback" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="items-center auto-cols-fr grid-cols-1 sm:grid-cols-2 grid-rows-[auto] grid gap-8">
+					<!-- Hidden honeypot field for spam protection -->
+					<input type="hidden" name="bot-field" />
+					
+					<!-- Hidden field to identify the form -->
+					<input type="hidden" name="form-name" value="feedback" />
+					{
+						fields?.map((field) => {
+							if (field.type === "submit") {
+								return (
+									<Button 
+										type="submit" 
+										class:list={[field.width == 2 && "sm:col-span-2"]}
+									>
+										{field.title}
+									</Button>
+								);
+							} else if (field.type === "select") {
+								return (
+									<div class:list={["text-base", field.width == 2 && "sm:col-span-2"]}>
+										<p class="text-black font-semibold max-w-full mb-3">
+											{field.title}
+										</p>
+										<select
+											name={getFieldName(field.title)}
+											required={field.required}
+											class="text-zinc-800 cursor-pointer py-4 w-full h-14 min-h-[3.50rem] border-2 border-black border-solid rounded-md m-0 bg-white"
+										>
+											<option value="">{field.placeholder || "Selecteer..."}</option>
+											{field.options?.map(option => (
+												<option value={option.value}>{option.label}</option>
+											))}
+										</select>
+									</div>
+								);
+							} else if (field.type === "textarea") {
+								return (
+									<div class:list={["text-base", field.width == 2 && "sm:col-span-2"]}>
+										<p class="text-black font-semibold max-w-full mb-3">
+											{field.title}
+										</p>
+										<textarea
+											name={getFieldName(field.title)}
+											required={field.required}
+											placeholder={field.placeholder}
+											class="text-zinc-800 cursor-text py-4 w-full border-2 border-black border-solid rounded-md m-0"
+										/>
+									</div>
+								);
+							} else {
+								return (
+									<div class:list={["text-base", field.width == 2 && "sm:col-span-2"]}>
+										<p class="text-black font-semibold max-w-full mb-3">
+											{field.title}
+										</p>
+										<input
+											type={field.type as HTMLInputTypeAttribute}
+											name={getFieldName(field.title)}
+											required={field.required}
+											placeholder={field.placeholder}
+											class="text-zinc-800 cursor-text py-4 w-full h-14 min-h-[3.50rem] border-2 border-black border-solid rounded-md m-0"
+										/>
+									</div>
+								);
+							}
+						})
+					}
+				</form>
+        <a class="text-sm italic">* {privacyStatement}</a>
+			</div>
+		</div>
+	</div>
+</div>

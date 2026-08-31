@@ -159,6 +159,19 @@ export default defineMarkdocConfig({
       },
       render: component("./src/components/sections/Contact.astro"),
     },
+    Feedback: {
+      attributes: {
+        introSection: { type: String, render: "introSection", required: true },
+        message: { type: String, render: "message", required: true },
+        privacyStatement: {
+          type: String,
+          render: "privacyStatement",
+          required: true,
+        },
+        fields: { type: Array, render: "fields", required: true },
+      },
+      render: component("./src/components/sections/Feedback.astro"),
+    },
     ContactSales: {
       attributes: {},
       render: component("./src/components/sections/ContactSales.astro"),

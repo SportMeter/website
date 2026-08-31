@@ -1,14 +1,14 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import WorkLayout from "@/layouts/WorkLayout.astro";
-import { getCollectionStaticPaths } from "@/lib/collection-helpers";
+import { getPrefixedCollectionStaticPaths } from "@/lib/collection-helpers";
 
 export interface Props {
 	data: CollectionEntry<"works">;
 }
 
 export async function getStaticPaths() {
-	return await getCollectionStaticPaths("works", "en");
+	return await getPrefixedCollectionStaticPaths("works", "en");
 }
 
 const { data: work } = Astro.props;

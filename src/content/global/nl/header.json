@@ -8,15 +8,11 @@
       "link": "/"
     },
     {
-      "title": "Modules",
-      "link": "/works"
-    },
-    {
       "title": "Over ons",
       "link": "/about"
     },
     {
-      "title": "Aanmelden Pilot",
+      "title": "Aanmelden",
       "link": "/contact"
     }
   ],

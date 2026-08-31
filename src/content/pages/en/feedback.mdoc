@@ -1,0 +1,34 @@
+---
+title: Feedback
+type: informational
+lastUpdateDate: 2024-03-09
+hideTitle: false
+addPadding: false
+seo:
+  title: "SportMeter Feedback"
+  description: Help us improve SportMeter
+  author: SportMeter
+---
+
+{% Container %}
+
+{% Feedback
+  introSection="We'd love to hear from you!"
+  message="Your feedback helps us make SportMeter better. Share your experience with us."
+  privacyStatement="We only use your contact details to respond to your feedback"
+  fields=[
+    {title: "Are you an athlete or a coach?", type: "select", placeholder: "Select...", required: true, options: [
+      {value: "athlete", label: "Athlete"},
+      {value: "coach", label: "Trainer/Coach"}
+    ]},
+    {title: "What type of request would you like to submit?", type: "select", placeholder: "Select...", required: true, options: [
+      {value: "feedback", label: "Feedback"},
+      {value: "privacy-request", label: "GDPR request"}
+    ]},
+    {title: "Explanation of your request:", placeholder: "Do you have feedback? We'd love to hear from you...", type: "textarea", width: 2, required: true},
+    {title: "How may we contact you?", placeholder: "Email or phone number", type: "text", required: true},
+    {title: "Send feedback", type: "submit", width: 2}
+  ]
+/%}
+
+{% /Container %}

@@ -2,6 +2,8 @@
 dist/
 .output/
 
+.netlify/
+
 rsa-keys/
 # dependencies
 node_modules/

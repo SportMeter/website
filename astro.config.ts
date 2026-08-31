@@ -46,7 +46,13 @@ export default defineConfig({
     markdoc(),
     keystatic(),
     robotsTxt({
-      policy: [{ userAgent: "*", allow: "/" }],
+      policy: [
+        {
+          userAgent: "*",
+          allow: "/",
+          disallow: ["/admin", "/keystatic"],
+        },
+      ],
     }),
     AstroPWA({
       mode: import.meta.env.PROD ? "production" : "development",

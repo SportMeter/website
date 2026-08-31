@@ -19,7 +19,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 console.log(sectionTitle,introSection)
 ---
 
-<div class="items-center text-sm font-medium justify-center flex pt-16">
+<div class="items-center text-sm font-medium justify-center flex pt-10 md:pt-16">
   <div class="bg-gray-100 rounded-2xl px-4 py-2">
     <h2 class="text-lg leading-none font-semibold my-1">{sectionTitle}</h2>
   </div>
@@ -31,7 +31,7 @@ console.log(sectionTitle,introSection)
 		set:html={introSection}
 	/>
 </div>
-	<div class="mt-16">
+	<div class="mt-10 md:mt-16">
 		<div
 			class="auto-cols-fr grid-cols-1 md:grid-cols-3 grid-rows-[auto] grid gap-10"
 		>
@@ -43,7 +43,7 @@ console.log(sectionTitle,introSection)
 							alt={`Service ${title}`}
 							class="align-middle inline-block w-12 h-12 max-w-full"
 						/>
-						<div class="mt-16 text-[1.38rem] leading-7 font-semibold">
+						<div class="mt-6 md:mt-16 text-[1.38rem] leading-7 font-semibold">
 							<h3 class="mb-3">{title}</h3>
 						</div>
 						<div class="mt-3.5 text-lg">

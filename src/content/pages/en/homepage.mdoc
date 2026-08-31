@@ -2,65 +2,66 @@
 title: Homepage
 subtitle: Homepage
 type: informational
-lastUpdateDate: 2025-06-23
+lastUpdateDate: 2026-02-08
 hideTitle: true
 addPadding: false
 seo:
   title: SportMeter
-  description: Vooruitgang begint met plezier!
+  description: Progress starts with fun!
   author: SportMeter
 ---
 
 {% Hero
-   title="Together, we give our club its true colors"
-   subtitle="We are SportMeter. The go-to tool that helps clubs grow by putting joy at the heart of everything they do. Ready to build a safe and connected community within your club?"
-   buttons=[{title: "Yes, I want to participate!", href: "#ContactLanding", style: "button", icon: "iconamoon:arrow-top-right-1-thin"}] /%}
+title="Engaging members, supporting volunteers"
+subtitle="SportMeter helps clubs see what's going on in the group. With short questions about how things are going, athletes get a voice and coaches get quick insight."
+buttons=[{title: "Yes, we're joining!", href: "#ContactLanding", style: "button", icon: "iconamoon:arrow-top-right-1-thin"}] /%}
 
 {% Container %}
 
 {% RecentWork
-   sectionTitle="Where to begin"
-   introSection="See how we make every voice count <span class=\"text-neutral-400\">– even the quiet ones.</span>"
+sectionTitle="Together for Fun"
+introSection="A campaign that shows what's going on <span class=\"text-neutral-400\">– among athletes, coaches and board members.</span>"
 /%}
-
 
 {% Services
-   sectionTitle="Pilot program overview"
-   introSection="Turn your policy into action with us <span class=\"text-neutral-400\">– in just 3 simple steps.</span>"
-   services=[
-    { 
-      title: "Start where it suits you",
-      description: "Choose a module that fits your club’s current needs. Support the mental, social, and physical well-being of your athletes through smart check-ins. We’re looking for partner clubs willing to commit to a 6-month pilot program.", 
-      icon: "/src/assets/pages/homepage/icon-number-1.png"
-    },
-    { title: "Pass along the teams and coaches information",
-      description: "This isn’t a quick sprint, but a process where we truly work together. Whether you’re on the field, coaching from the sidelines, or volunteering behind the scenes: when you feel safe and seen, you’ll be motivated to take action—both literally and figuratively.",
-      icon: "/src/assets/pages/homepage/icon-number-2.png"
-    }, 
-    { title: "Get started, stay on track, grow further",
-      description: "After a brief onboarding, we hit the ground running. We improve along the way, learn from each other, and build something that works — for you and for the rest of the sporting community in the Netherlands.",
-      icon: "/src/assets/pages/homepage/icon-number-3.png"
-    }]
+sectionTitle="How do we get started?"
+introSection="From first conversation to running check-ins <span class=\"text-neutral-400\">– in 3 steps.</span>"
+services=[
+{
+title: "Tailored intake",
+description: "Together we choose the themes that fit your athletes and volunteers. Want to get your coaches fully on board? Then we're happy to come by for a kick-off workshop.",
+icon: "/src/assets/pages/homepage/icon-number-1.png"
+},
+{
+title: "Check-ins go live",
+description: "Athletes answer short questions about the chosen themes. Notice the timing of a question isn't working? You can adjust it yourself along the way.",
+icon: "/src/assets/pages/homepage/icon-number-2.png"
+},
+{
+title: "Discuss and adjust",
+description: "Coaches set the accent for the coming weeks together. We follow the progress and share what we see.",
+icon: "/src/assets/pages/homepage/icon-number-3.png"
+}]
 /%}
 
-{% BlogLatest 
-  sectionTitle="Collaborations" 
-  introSection="Discover how partner clubs use our modules <span class=\"text-neutral-400\">— and why they choose them.</span>" 
+{% BlogLatest
+sectionTitle="Collaborations"
+introSection="Discover what partner clubs use the tool for <span class=\"text-neutral-400\">– and why they choose it.</span>"
 /%}
 
 {% CantactLanding
-  sectionTitle="Contact"
-  introSection="Ready to join us?"
-  message="Leave your name and contact details, and we’ll explore together how SportMeter can work for your club."
-  privacyStatement="Your contact details will only be used for updates about the SportMeter pilots. More information can be found in our privacy policy."
-  fields=[
-    {title: "Full name", placeholder: "Janneke Slinger", required: true, type: "text"},
-    {title: "Email", placeholder: "contact@email.com", required: true, type: "email"},
-    {title: "Phone", placeholder: "+316 37 11 22 33", type: "tel"},
-    {title: "Preferred call time", placeholder: "from 10:00 til 16:00", type: "text"},
-    {title: "Message", placeholder: "Write your message here", type: "textarea", width: 2},
-    {title: "Send", type: "submit", width: 2}
-  ]
+sectionTitle="Contact"
+introSection="Ready to join?"
+message="Leave your name and contact details and we'll explore together how the tool can work at your club."
+privacyStatement="We only use your contact details for updates about the Together for Fun campaign. You can find more info in our privacy statement."
+fields=[
+{title: "Full name", placeholder: "Jane Smith", required: true, type: "text"},
+{title: "Email", placeholder: "contact@email.com", required: true, type: "email"},
+{title: "Phone", placeholder: "+316 37 11 22 33", type: "tel"},
+{title: "Preferred call time", placeholder: "10:00 AM to 4:00 PM", type: "text"},
+{title: "Message", placeholder: "Write your message here", type: "textarea", width: 2},
+{title: "Send", type: "submit", width: 2}
+]
 /%}
 
 {% /Container %}

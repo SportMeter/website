@@ -8,15 +8,11 @@
       "link": "/"
     },
     {
-      "title": "Modules",
-      "link": "/works"
-    },
-    {
       "title": "About us",
       "link": "/about"
     },
     {
-      "title": "Register Pilot",
+      "title": "Sign up",
       "link": "/contact"
     }
   ],

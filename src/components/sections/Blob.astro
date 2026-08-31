@@ -10,7 +10,11 @@ const { class: className } = Astro.props;
 <div class="relative">
 	<canvas id="blob" class:list={["touch:pointer-events-none", className]}
 	></canvas>
-	<video id="video-blob" autoplay loop muted controls>
+	<!-- preload="none" + no autoplay attribute: the 15MB video must not delay
+	     window "load" (which gates astro:page-load and the hero reveal);
+	     playback is started from the init() script instead.
+	     playsinline is required for inline playback on iOS. -->
+	<video id="video-blob" loop muted playsinline preload="none" controls>
 		<source src={promoVideo} />
 		Your browser does not support the video tag.
 	</video>
@@ -391,10 +395,10 @@ const { class: className } = Astro.props;
 
 		let width = 550;
 
-		if (window.innerWidth < 640) {
-			width = 400;
-		} else if (window.innerWidth < 400) {
+		if (window.innerWidth < 400) {
 			width = 300;
+		} else if (window.innerWidth < 640) {
+			width = 400;
 		}
 
 		canvas.width = width;
@@ -409,6 +413,11 @@ const { class: className } = Astro.props;
 		) as HTMLDivElement;
 
 		if (!canvas || !video) return;
+
+		// astro:page-load also fires on the initial visit after we have already
+		// initialized this canvas — don't start a second render loop on it
+		if (canvas.dataset.blobInit) return;
+		canvas.dataset.blobInit = "true";
 
 		canvas.setAttribute("touch-action", "none");
 
@@ -426,7 +435,8 @@ const { class: className } = Astro.props;
 		blob.init();
 		blob.render();
 
-		video.play();
+		// May reject when autoplay is blocked (e.g. iOS Low Power Mode)
+		video.play().catch(() => {});
 
 		// Add click event listener to canvas to make video full screen
 		canvas.addEventListener("click", () => {
@@ -437,7 +447,7 @@ const { class: className } = Astro.props;
 			if (!document.fullscreenElement) {
 				// Make sure the video keep playing
 				video.muted = true;
-				video.play();
+				video.play().catch(() => {});
 			}
 		});
 	};
@@ -448,6 +458,10 @@ const { class: className } = Astro.props;
 		isMouseMoveListenerAdded = false;
 	}
 
+	// Run right away on the initial visit — astro:page-load waits for window
+	// "load", which would leave the blob blank until every asset has fetched
+	init();
+	// Still needed for client-side navigations back to this page
 	document.addEventListener("astro:page-load", init);
 	document.addEventListener("astro:before-swap", detachEventListeners);
 
