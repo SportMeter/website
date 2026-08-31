@@ -16,5 +16,11 @@
       "link": "/contact"
     }
   ],
-  "actions": []
+  "actions": [
+    {
+      "title": "Inloggen",
+      "link": "%APP_URL%",
+      "style": "button"
+    }
+  ]
 }

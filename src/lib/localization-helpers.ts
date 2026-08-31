@@ -7,7 +7,7 @@ import headerNl from "@/content/global/nl/header.json";
 import seoNl from "@/content/global/nl/seo.json";
 import style from "@/content/global/style.json";
 import widget from "@/content/global/widget.json";
-import { defaultLocale, locales } from "site.config";
+import { appUrl, defaultLocale, locales } from "site.config";
 
 const settings: Record<string, LocalizedSettings> = {
 	nl: {
@@ -52,4 +52,21 @@ export function unlocalizedUrl(url: string): string {
 
 export function translatePath(l: string, path: string) {
 	return l === defaultLocale ? path : `/${l}${path}`;
+}
+
+/**
+ * Header/footer action links come from the CMS, but the app they point at
+ * differs per market: app.sport-meter.nl for the Dutch site,
+ * app.sportmeter.au for the Australian one. Editors therefore write the
+ * placeholder %APP_URL% (optionally followed by a path) and the build fills in
+ * APP_URL for this deployment.
+ */
+export const APP_URL_PLACEHOLDER = "%APP_URL%";
+
+export function resolveActionLink(link: string): string {
+	if (!link) return link;
+
+	return link.startsWith(APP_URL_PLACEHOLDER)
+		? appUrl + link.slice(APP_URL_PLACEHOLDER.length)
+		: link;
 }

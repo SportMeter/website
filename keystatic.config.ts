@@ -71,7 +71,11 @@ export default config({
         actions: fields.array(
           fields.object({
             title: fields.text({ label: "Title" }),
-            link: fields.text({ label: "Url" }),
+            link: fields.text({
+              label: "Url",
+              description:
+                "Use %APP_URL% to link to the web app; the build replaces it with the right app domain for this market (app.sport-meter.nl or app.sportmeter.au).",
+            }),
             style: fields.select({
               label: "Style",
               options: [
