@@ -23,7 +23,7 @@ declare global {
 		actions: {
 			title: string;
 			link: string;
-			style: string;
+			style: "button" | "outline";
 		}[];
 	}
 
