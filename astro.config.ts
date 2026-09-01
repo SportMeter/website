@@ -14,11 +14,16 @@ import { defaultLocale, locales, siteTitle, siteUrl } from "./site.config";
 // https://astro.build/config
 export default defineConfig({
   site: siteUrl,
-  output: "hybrid",
+  output: "static",
   adapter: netlify({
     imageCDN: true,
   }),
   compressHTML: true,
+  legacy: {
+    // Keep the v2 content-collection API (src/content/config.ts, entry.render()).
+    // Migrating 21 call sites to the Content Layer API is a separate change.
+    collections: true,
+  },
   i18n: {
     defaultLocale: defaultLocale,
     locales: locales,
