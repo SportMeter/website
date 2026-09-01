@@ -2,6 +2,7 @@
 import { pwaAssetsHead } from "virtual:pwa-assets/head";
 import { pwaInfo } from "virtual:pwa-info";
 import "@/styles/global.css";
+import LegacyAppLinkForwarder from "@/components/LegacyAppLinkForwarder.astro";
 import { getLocalizedSettings } from "@/lib/localization-helpers";
 import { SEO, type SEOProps } from "astro-seo";
 
@@ -73,6 +74,9 @@ const seo = {
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<!-- Must stay first: forwards legacy /#/... invite links before anything renders. -->
+	<LegacyAppLinkForwarder />
 
 	<SEO {...seo} />
 
