@@ -1,0 +1,31 @@
+---
+import { appUrl } from "site.config";
+
+/**
+ * Team invite links handed out before the login moved to its own subdomain
+ * look like https://sport-meter.nl/#/newuser/<code> — a Flutter hash route on
+ * what is now this landing page. Those links live on in WhatsApp groups and
+ * e-mails, so they have to keep working.
+ *
+ * They cannot be handled server-side: everything after the # is never sent to
+ * the server, so a redirect rule (or a Netlify _redirects entry) only ever
+ * sees a request for "/" and the invite code is lost. Only the browser can see
+ * it, hence this script.
+ *
+ * Deliberately narrow — it fires only on the site root and only for a hash
+ * that starts with "#/", so ordinary in-page anchors such as #contact are
+ * never touched.
+ */
+const appOrigin = appUrl.replace(/\/+$/, "");
+---
+
+<script is:inline define:vars={{ appOrigin }}>
+	(function () {
+		var hash = window.location.hash;
+
+		if (hash.slice(0, 2) !== "#/") return;
+		if (window.location.pathname !== "/") return;
+
+		window.location.replace(appOrigin + "/" + hash);
+	})();
+</script>
