@@ -2,7 +2,7 @@
 import Container from "@/components/primitives/Container.astro";
 import { getLocalizedSettings } from "@/lib/localization-helpers";
 import { translatePath, unlocalizedUrl } from "@/lib/localization-helpers";
-import { locales } from "site";
+import { defaultLocale, locales } from "site";
 import footerImage from "@/assets/global/footer-image.jpeg";
 
 const currentLocale = Astro.currentLocale;
@@ -59,9 +59,9 @@ function isActiveLocale(locale: string): boolean {
 							}
 						</div>
             <div class="flex gap-5 text-lg text-blue-700">
-              <a href="/privacy" class="inline-block max-w-full">
+              <a href={translatePath(currentLocale ?? defaultLocale, "/privacy")} class="inline-block max-w-full">
                 <p class="text-white border-b-2 cursor-pointer pb-1 border-white border-solid">
-                  Privacy policy
+                  {currentLocale === "en" ? "Privacy policy" : "Privacyverklaring"}
                 </p>
               </a>
 					</div>

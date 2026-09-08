@@ -1,148 +1,300 @@
 ---
-// No props needed - content is hardcoded
+/**
+ * Privacy.astro
+ *
+ * The full privacy statement. The text lives here rather than in the CMS
+ * because it is a legal document that is versioned with the code.
+ * - Locale-aware text via Astro.currentLocale
+ * - The website reference points at siteUrl, so the Australian deployment
+ *   links to its own domain instead of samenvoorplezier.nl
+ */
+import { siteUrl } from "site";
+
+const lang = Astro.currentLocale ?? "nl";
+const isEN = lang === "en";
+
+const siteHost = siteUrl.replace(/^https?:\/\//, "").replace(/\/$/, "");
+const linkClass = "text-blue-600 hover:text-blue-800 underline";
+
+const t = {
+  title: isEN ? "SportMeter Privacy Statement" : "Privacyverklaring SportMeter",
+  version: isEN
+    ? "Version 1.2 — Date: 1 August 2026"
+    : "Versie 1.2 — Datum: 1 augustus 2026",
+
+  introHeading: isEN ? "1. Introduction" : "1. Inleiding",
+  introBody: isEN
+    ? "At <strong>SportMeter</strong> we think your privacy is extremely important. In this privacy statement we explain which personal data we collect, why we do so and how we protect your data."
+    : "Bij <strong>SportMeter</strong> vinden we jouw privacy ontzettend belangrijk. In deze privacyverklaring leggen we uit welke persoonsgegevens we verzamelen, waarom we dat doen en hoe we jouw gegevens beschermen.",
+
+  whoHeading: isEN ? "2. Who are we?" : "2. Wie zijn wij?",
+  whoBody: isEN
+    ? "SportMeter helps clubs see what's going on in the group. With short questions about how things are going, athletes get a voice and coaches get quick insight."
+    : "SportMeter helpt verenigingen zien wat er leeft in de groep. Met korte vragen over hoe het gaat krijgen sporters een stem en begeleiders snel inzicht.",
+  contactLabel: isEN ? "Our contact details:" : "Onze contactgegevens:",
+  contactBody: isEN
+    ? "SportMeter<br>Guirlande, 2496 VV The Hague, the Netherlands<br>Chamber of Commerce number: 95134026<br>Email address: sportmeter.app@gmail.com"
+    : "SportMeter<br>Guirlande,  2496 VV Den Haag<br>KvK-nummer: 95134026<br>E-mailadres: sportmeter.app@gmail.com",
+
+  dataHeading: isEN
+    ? "3. Which data do we collect?"
+    : "3. Welke gegevens verzamelen wij?",
+  dataIntro: isEN
+    ? "We only collect the information we need to give you a safe and reliable experience with SportMeter."
+    : "Wij verzamelen alleen de informatie die nodig is om je een veilige en betrouwbare ervaring met SportMeter te bieden.",
+  dataLead: isEN ? "This may include:" : "Dit kan omvatten:",
+  dataItems: isEN
+    ? [
+        '<strong class="text-gray-900">Account information:</strong> name, email address and phone number.',
+        '<strong class="text-gray-900">Measurement data you enter:</strong> data you enter into SportMeter yourself, such as numerical scores, selected options or free-text answers.',
+        '<strong class="text-gray-900">Health-related data (optional):</strong> such as perceived exertion levels (RPE scores) or body weight. This data is only processed with your explicit consent. Because under the GDPR this can be regarded as <strong>health data</strong>, we only process this information under the following conditions: (1) You enter this data <strong>voluntarily</strong>; without your input it is not collected. (2) We process this data solely for the purposes described in this privacy statement, such as supporting your learning process and monitoring progress. (3) The processing takes place on the basis of your <strong>explicit consent</strong>, which you can withdraw at any time.',
+        '<strong class="text-gray-900">Pilot contributions:</strong> any feedback, comments or suggestions you share with us during a pilot.',
+        '<strong class="text-gray-900">Use of the tool:</strong> login details, sessions, technical data (e.g. IP address, browser information).',
+      ]
+    : [
+        '<strong class="text-gray-900">Accountinformatie:</strong> naam, e-mailadres en telefoonnummer.',
+        '<strong class="text-gray-900">Ingevoerde meetgegevens:</strong> gegevens die je zelf invoert in SportMeter, zoals numerieke scores, gekozen opties of vrije tekstantwoorden.',
+        '<strong class="text-gray-900">Gezondheidsgerelateerde gegevens (optioneel):</strong> zoals ervaren inspanningsniveaus (RPE-scores) of lichaamsgewicht. Deze gegevens worden alleen verwerkt met jouw uitdrukkelijke toestemming. Omdat dit volgens de AVG kan worden gezien als <strong>gezondheidsgegevens</strong>, verwerken wij deze informatie alleen onder de volgende voorwaarden: (1) Je vult deze gegevens <strong>vrijwillig</strong> in; zonder jouw invoer worden ze niet verzameld. (2) Wij verwerken deze gegevens uitsluitend voor de doeleinden die in deze privacyverklaring zijn beschreven, zoals het ondersteunen van jouw leerproces en het monitoren van voortgang. (3) De verwerking gebeurt op basis van jouw <strong>uitdrukkelijke toestemming</strong>, die je op elk moment kunt intrekken.',
+        '<strong class="text-gray-900">Pilotbijdragen:</strong> eventuele feedback, opmerkingen of suggesties die je tijdens een pilot met ons deelt.',
+        '<strong class="text-gray-900">Gebruik van het tool:</strong> inloggegevens, sessies, technische data (bijv. IP-adres, browserinformatie).',
+      ],
+
+  whyHeading: isEN
+    ? "4. Why do we process this data?"
+    : "4. Waarom verwerken wij deze gegevens?",
+  whyIntro: isEN ? "We use your data to:" : "Wij gebruiken je gegevens om:",
+  whyItems: isEN
+    ? [
+        "Give you access to the tool and manage your account.",
+        "Provide and improve the functionality of SportMeter.",
+        "Guarantee a reliable and safe environment for you and other participants.",
+        "Support coaches in guiding and monitoring your fun in sport.",
+        "Draw up invoices and process payments (where applicable).",
+        "Comply with legal obligations.",
+      ]
+    : [
+        "Je toegang te geven tot de tool en je account te beheren.",
+        "De functionaliteit van SportMeter te bieden en te verbeteren.",
+        "Een betrouwbare en veilige omgeving voor jou en andere deelnemers te waarborgen.",
+        "Coaches te ondersteunen bij het begeleiden en monitoren van jouw sportplezier.",
+        "Facturen op te stellen en betalingen te verwerken (indien van toepassing).",
+        "Te voldoen aan wettelijke verplichtingen.",
+      ],
+  whyBasis: isEN
+    ? '<strong class="text-gray-900">Legal basis for processing:</strong> processing your data is necessary for the performance of the service agreement with your sports club.'
+    : '<strong class="text-gray-900">Grondslag voor verwerking:</strong> De verwerking van jouw gegevens is noodzakelijk voor de uitvoering van de dienst overeenkomst met jouw sportvereniging.',
+
+  protectHeading: isEN
+    ? "5. How do we protect your data?"
+    : "5. Hoe beschermen wij jouw gegevens?",
+  protectIntro: isEN
+    ? "We take appropriate technical and organisational measures to protect your data, such as:"
+    : "Wij nemen passende technische en organisatorische maatregelen om je gegevens te beschermen, zoals:",
+  protectItems: isEN
+    ? [
+        "Secure (SSL) connections.",
+        "Strict access control on our systems.",
+        "Regular back-ups.",
+      ]
+    : [
+        "Beveiligde (SSL) verbindingen.",
+        "Strikte toegangscontrole op onze systemen.",
+        "Regelmatige back-ups.",
+      ],
+
+  shareHeading: isEN
+    ? "6. Do we share your data?"
+    : "6. Delen wij jouw gegevens?",
+  shareIntro: isEN
+    ? "We only share your data:"
+    : "Wij delen jouw gegevens alleen:",
+  shareItems: isEN
+    ? [
+        "With trusted service providers who help us run SportMeter, such as cloud provider Google. As a result, data may be stored outside the EU.",
+        "When we are legally required to, for example to comply with laws or regulations.",
+        "Only if you choose to share information publicly yourself, for example by giving feedback or comments within the platform.",
+      ]
+    : [
+        "Met vertrouwde dienstverleners die ons helpen bij het functioneren van SportMeter, zoals cloud provider Google. Gegevens kunnen hierdoor buiten de EU worden opgeslagen.",
+        "Wanneer dit wettelijk verplicht is, bijvoorbeeld om te voldoen aan wet- of regelgeving.",
+        "Alleen als jij er zelf voor kiest om informatie openbaar te delen, bijvoorbeeld door feedback of opmerkingen te geven binnen het platform.",
+      ],
+  shareNeverSell: isEN
+    ? "We <strong>never</strong> sell your data to third parties."
+    : "We verkopen jouw gegevens <strong>nooit</strong> aan derden.",
+
+  consentHeading: isEN
+    ? "7. Consent for health data"
+    : "7. Toestemming voor gezondheidsgegevens",
+  consentIntro: isEN
+    ? "For health-related data, explicit consent is requested through an <strong>informed consent</strong> in the app stores.<br>You can withdraw this consent at any time via:"
+    : "Voor gezondheidsgerelateerde gegevens wordt expliciete toestemming gevraagd via een <strong>informed consent</strong> in de app-stores.<br>Je kunt deze toestemming op elk moment intrekken via:",
+  consentItems: isEN
+    ? [
+        "Your profile page in the app",
+        `Or via <a href="${siteUrl}" class="${linkClass}">${siteHost}</a>`,
+      ]
+    : [
+        "Je profielpagina in de app",
+        `Of via <a href="${siteUrl}" class="${linkClass}">${siteHost}</a>`,
+      ],
+  consentNote: isEN
+    ? "Without your consent this data is not processed."
+    : "Zonder jouw toestemming worden deze gegevens niet verwerkt.",
+
+  rightsHeading: isEN ? "8. Your rights" : "8. Jouw rechten",
+  rightsIntro: isEN ? "You have the right to:" : "Je hebt recht op:",
+  rightsItems: isEN
+    ? [
+        "Access to your personal data.",
+        "Correction of your data.",
+        'Erasure of your data ("right to be forgotten").',
+        "Object to processing.",
+        "Portability of your data.",
+      ]
+    : [
+        "Inzage in je persoonsgegevens.",
+        "Correctie van je gegevens.",
+        'Verwijdering van je gegevens ("recht om vergeten te worden").',
+        "Bezwaar tegen verwerking.",
+        "Overdraagbaarheid van je gegevens.",
+      ],
+  rightsContact: isEN
+    ? "Would you like to exercise one of these rights? Send an email to sportmeter.app@gmail.com. We always respond within 30 days."
+    : "Wil je gebruik maken van een van deze rechten? Stuur dan een e-mail naar sportmeter.app@gmail.com. We reageren altijd binnen 30 dagen.",
+
+  retentionHeading: isEN ? "9. Retention periods" : "9. Bewaartermijnen",
+  retentionIntro: isEN ? "We keep your data:" : "We bewaren jouw gegevens:",
+  retentionItems: isEN
+    ? [
+        "For as long as the pilot at the club runs. After 3 months at most, all data will be deleted.",
+        `The data entered via the website — <a href="${siteUrl}" class="${linkClass}">${siteHost}</a> — will be kept in line with the statutory retention periods.`,
+      ]
+    : [
+        "Zolang de pilot loopt bij de vereniging. Na max 3 maanden zullen alle gegevens verwijderd worden.",
+        `De gegevens die via de website - <a href="${siteUrl}" class="${linkClass}">${siteHost}</a> - worden ingevuld, zullen bewaard worden volgens de wettelijke bewaartermijnen.`,
+      ],
+  retentionNote: isEN
+    ? "After that, your data is securely deleted."
+    : "Daarna worden je gegevens veilig verwijderd.",
+
+  changesHeading: isEN ? "10. Changes" : "10. Wijzigingen",
+  changesBody: isEN
+    ? "This privacy statement may be amended. Of course, we will inform you in good time about any important changes."
+    : "Deze privacyverklaring kan worden aangepast. Bij belangrijke wijzigingen informeren we je daar natuurlijk tijdig over.",
+
+  questionsHeading: isEN
+    ? "11. Questions or complaints?"
+    : "11. Vragen of klachten?",
+  questionsBody: isEN
+    ? "Do you have questions or complaints about how we handle your data? Get in touch with us at sportmeter.app@gmail.com."
+    : "Heb je vragen of klachten over hoe wij met je gegevens omgaan? Neem contact met ons op via sportmeter.app@gmail.com.",
+  questionsAuthority: isEN
+    ? "Not happy with our response? You can then turn to the Dutch Data Protection Authority (<strong>Autoriteit Persoonsgegevens</strong>)."
+    : "Ben je niet tevreden met onze reactie? Dan kun je terecht bij de <strong>Autoriteit Persoonsgegevens</strong>.",
+
+  closing: isEN
+    ? "SportMeter – handling your data safely, we take that for granted."
+    : "SportMeter – Veilig omgaan met jouw gegevens, dat vinden wij vanzelfsprekend.",
+};
 ---
 
 <div class="relative w-full pb-40">
   <div class="max-w-4xl mx-auto px-6">
     <div class="mb-12">
       <h1 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-        Privacyverklaring SportMeter
+        {t.title}
       </h1>
       <p class="text-lg text-gray-600">
-        Versie 1.2 — Datum: 1 augustus 2026
+        {t.version}
       </p>
     </div>
-    
-    <div class="prose prose-lg max-w-none">
-      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">1. Inleiding</h2>
-      <p class="text-gray-700 mb-6">
-        Bij <strong>SportMeter</strong> vinden we jouw privacy ontzettend belangrijk. In deze privacyverklaring leggen we uit welke persoonsgegevens we verzamelen, waarom we dat doen en hoe we jouw gegevens beschermen.
-      </p>
 
-      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">2. Wie zijn wij?</h2>
+    <div class="prose prose-lg max-w-none">
+      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">{t.introHeading}</h2>
+      <p class="text-gray-700 mb-6" set:html={t.introBody} />
+
+      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">{t.whoHeading}</h2>
       <p class="text-gray-700 mb-4">
-        SportMeter helpt verenigingen zien wat er leeft in de groep. Met korte vragen over hoe het gaat krijgen sporters een stem en begeleiders snel inzicht.
+        {t.whoBody}
       </p>
       <div class="bg-gray-50 p-4 rounded-lg mb-6">
-        <p class="font-semibold text-gray-900 mb-2">Onze contactgegevens:</p>
-        <p class="text-gray-700">
-          SportMeter<br>
-          Guirlande,  2496 VV Den Haag<br>
-          KvK-nummer: 95134026<br>
-          E-mailadres: sportmeter.app@gmail.com
-        </p>
+        <p class="font-semibold text-gray-900 mb-2">{t.contactLabel}</p>
+        <p class="text-gray-700" set:html={t.contactBody} />
       </div>
 
-      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">3. Welke gegevens verzamelen wij?</h2>
+      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">{t.dataHeading}</h2>
       <p class="text-gray-700 mb-4">
-        Wij verzamelen alleen de informatie die nodig is om je een veilige en betrouwbare ervaring met SportMeter te bieden.
+        {t.dataIntro}
       </p>
-      <p class="text-gray-700 mb-4">Dit kan omvatten:</p>
+      <p class="text-gray-700 mb-4">{t.dataLead}</p>
       <ul class="space-y-4 mb-6">
-        <li class="text-gray-700">
-          <strong class="text-gray-900">Accountinformatie:</strong> naam, e-mailadres en telefoonnummer.
-        </li>
-        <li class="text-gray-700">
-          <strong class="text-gray-900">Ingevoerde meetgegevens:</strong> gegevens die je zelf invoert in SportMeter, zoals numerieke scores, gekozen opties of vrije tekstantwoorden.
-        </li>
-        <li class="text-gray-700">
-          <strong class="text-gray-900">Gezondheidsgerelateerde gegevens (optioneel):</strong> zoals ervaren inspanningsniveaus (RPE-scores) of lichaamsgewicht. Deze gegevens worden alleen verwerkt met jouw uitdrukkelijke toestemming. Omdat dit volgens de AVG kan worden gezien als <strong>gezondheidsgegevens</strong>, verwerken wij deze informatie alleen onder de volgende voorwaarden: (1) Je vult deze gegevens <strong>vrijwillig</strong> in; zonder jouw invoer worden ze niet verzameld. (2) Wij verwerken deze gegevens uitsluitend voor de doeleinden die in deze privacyverklaring zijn beschreven, zoals het ondersteunen van jouw leerproces en het monitoren van voortgang. (3) De verwerking gebeurt op basis van jouw <strong>uitdrukkelijke toestemming</strong>, die je op elk moment kunt intrekken.
-        </li>
-        <li class="text-gray-700">
-          <strong class="text-gray-900">Pilotbijdragen:</strong> eventuele feedback, opmerkingen of suggesties die je tijdens een pilot met ons deelt.
-        </li>
-        <li class="text-gray-700">
-          <strong class="text-gray-900">Gebruik van het tool:</strong> inloggegevens, sessies, technische data (bijv. IP-adres, browserinformatie).
-        </li>
+        {t.dataItems.map((item) => <li class="text-gray-700" set:html={item} />)}
       </ul>
 
-      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">4. Waarom verwerken wij deze gegevens?</h2>
-      <p class="text-gray-700 mb-4">Wij gebruiken je gegevens om:</p>
+      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">{t.whyHeading}</h2>
+      <p class="text-gray-700 mb-4">{t.whyIntro}</p>
       <ul class="list-disc list-inside space-y-2 mb-6 text-gray-700">
-        <li>Je toegang te geven tot de tool en je account te beheren.</li>
-        <li>De functionaliteit van SportMeter te bieden en te verbeteren.</li>
-        <li>Een betrouwbare en veilige omgeving voor jou en andere deelnemers te waarborgen.</li>
-        <li>Coaches te ondersteunen bij het begeleiden en monitoren van jouw sportplezier.</li>
-        <li>Facturen op te stellen en betalingen te verwerken (indien van toepassing).</li>
-        <li>Te voldoen aan wettelijke verplichtingen.</li>
+        {t.whyItems.map((item) => <li>{item}</li>)}
       </ul>
-      <p class="text-gray-700 mb-6">
-        <strong class="text-gray-900">Grondslag voor verwerking:</strong> De verwerking van jouw gegevens is noodzakelijk voor de uitvoering van de dienst overeenkomst met jouw sportvereniging.
-      </p>
+      <p class="text-gray-700 mb-6" set:html={t.whyBasis} />
 
-      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">5. Hoe beschermen wij jouw gegevens?</h2>
+      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">{t.protectHeading}</h2>
       <p class="text-gray-700 mb-4">
-        Wij nemen passende technische en organisatorische maatregelen om je gegevens te beschermen, zoals:
+        {t.protectIntro}
       </p>
       <ul class="list-disc list-inside space-y-2 mb-6 text-gray-700">
-        <li>Beveiligde (SSL) verbindingen.</li>
-        <li>Strikte toegangscontrole op onze systemen.</li>
-        <li>Regelmatige back-ups.</li>
+        {t.protectItems.map((item) => <li>{item}</li>)}
       </ul>
 
-      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">6. Delen wij jouw gegevens?</h2>
-      <p class="text-gray-700 mb-4">Wij delen jouw gegevens alleen:</p>
+      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">{t.shareHeading}</h2>
+      <p class="text-gray-700 mb-4">{t.shareIntro}</p>
       <ul class="list-disc list-inside space-y-2 mb-6 text-gray-700">
-        <li>Met vertrouwde dienstverleners die ons helpen bij het functioneren van SportMeter, zoals cloud provider Google. Gegevens kunnen hierdoor buiten de EU worden opgeslagen.</li>
-        <li>Wanneer dit wettelijk verplicht is, bijvoorbeeld om te voldoen aan wet- of regelgeving.</li>
-        <li>Alleen als jij er zelf voor kiest om informatie openbaar te delen, bijvoorbeeld door feedback of opmerkingen te geven binnen het platform.</li>
+        {t.shareItems.map((item) => <li>{item}</li>)}
+      </ul>
+      <p class="text-gray-700 mb-6" set:html={t.shareNeverSell} />
+
+      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">{t.consentHeading}</h2>
+      <p class="text-gray-700 mb-4" set:html={t.consentIntro} />
+      <ul class="list-disc list-inside space-y-2 mb-6 text-gray-700">
+        {t.consentItems.map((item) => <li set:html={item} />)}
       </ul>
       <p class="text-gray-700 mb-6">
-        We verkopen jouw gegevens <strong>nooit</strong> aan derden.
+        {t.consentNote}
       </p>
 
-      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">7. Toestemming voor gezondheidsgegevens</h2>
+      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">{t.rightsHeading}</h2>
+      <p class="text-gray-700 mb-4">{t.rightsIntro}</p>
+      <ul class="list-disc list-inside space-y-2 mb-6 text-gray-700">
+        {t.rightsItems.map((item) => <li>{item}</li>)}
+      </ul>
+      <p class="text-gray-700 mb-6">
+        {t.rightsContact}
+      </p>
+
+      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">{t.retentionHeading}</h2>
+      <p class="text-gray-700 mb-4">{t.retentionIntro}</p>
+      <ul class="list-disc list-inside space-y-2 mb-6 text-gray-700">
+        {t.retentionItems.map((item) => <li set:html={item} />)}
+      </ul>
+      <p class="text-gray-700 mb-6">
+        {t.retentionNote}
+      </p>
+
+      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">{t.changesHeading}</h2>
+      <p class="text-gray-700 mb-6">
+        {t.changesBody}
+      </p>
+
+      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">{t.questionsHeading}</h2>
       <p class="text-gray-700 mb-4">
-        Voor gezondheidsgerelateerde gegevens wordt expliciete toestemming gevraagd via een <strong>informed consent</strong> in de app-stores.<br>
-        Je kunt deze toestemming op elk moment intrekken via:
+        {t.questionsBody}
       </p>
-      <ul class="list-disc list-inside space-y-2 mb-6 text-gray-700">
-        <li>Je profielpagina in de app</li>
-        <li>Of via <a href="https://www.samenvoorplezier.nl/" class="text-blue-600 hover:text-blue-800 underline">www.samenvoorplezier.nl</a></li>
-      </ul>
-      <p class="text-gray-700 mb-6">
-        Zonder jouw toestemming worden deze gegevens niet verwerkt.
-      </p>
-
-      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">8. Jouw rechten</h2>
-      <p class="text-gray-700 mb-4">Je hebt recht op:</p>
-      <ul class="list-disc list-inside space-y-2 mb-6 text-gray-700">
-        <li>Inzage in je persoonsgegevens.</li>
-        <li>Correctie van je gegevens.</li>
-        <li>Verwijdering van je gegevens ("recht om vergeten te worden").</li>
-        <li>Bezwaar tegen verwerking.</li>
-        <li>Overdraagbaarheid van je gegevens.</li>
-      </ul>
-      <p class="text-gray-700 mb-6">
-        Wil je gebruik maken van een van deze rechten? Stuur dan een e-mail naar sportmeter.app@gmail.com. We reageren altijd binnen 30 dagen.
-      </p>
-
-      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">9. Bewaartermijnen</h2>
-      <p class="text-gray-700 mb-4">We bewaren jouw gegevens:</p>
-      <ul class="list-disc list-inside space-y-2 mb-6 text-gray-700">
-        <li>Zolang de pilot loopt bij de vereniging. Na max 3 maanden zullen alle gegevens verwijderd worden.</li>
-        <li>De gegevens die via de website - <a href="http://samenvoorplezier.nl/" class="text-blue-600 hover:text-blue-800 underline">samenvoorplezier.nl</a> - worden ingevuld, zullen bewaard worden volgens de wettelijke bewaartermijnen.</li>
-      </ul>
-      <p class="text-gray-700 mb-6">
-        Daarna worden je gegevens veilig verwijderd.
-      </p>
-
-      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">10. Wijzigingen</h2>
-      <p class="text-gray-700 mb-6">
-        Deze privacyverklaring kan worden aangepast. Bij belangrijke wijzigingen informeren we je daar natuurlijk tijdig over.
-      </p>
-
-      <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">11. Vragen of klachten?</h2>
-      <p class="text-gray-700 mb-4">
-        Heb je vragen of klachten over hoe wij met je gegevens omgaan? Neem contact met ons op via sportmeter.app@gmail.com.
-      </p>
-      <p class="text-gray-700 mb-6">
-        Ben je niet tevreden met onze reactie? Dan kun je terecht bij de <strong>Autoriteit Persoonsgegevens</strong>.
-      </p>
+      <p class="text-gray-700 mb-6" set:html={t.questionsAuthority} />
 
       <div class="bg-blue-50 p-6 rounded-lg mt-8">
         <p class="text-lg font-semibold text-blue-900 text-center">
-          SportMeter – Veilig omgaan met jouw gegevens, dat vinden wij vanzelfsprekend.
+          {t.closing}
         </p>
       </div>
     </div>
