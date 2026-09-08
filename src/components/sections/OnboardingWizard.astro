@@ -1,0 +1,462 @@
+---
+/**
+ * OnboardingWizard.astro
+ *
+ * "Step 2" of the sign-up flow: a short questionnaire whose answers let the
+ * team set up the coach's account and first check-ins before the first
+ * conversation. One question per screen, Alpine-driven, posted to the Netlify
+ * form `contact-onboarding` (see OnboardingFormDefinition.astro).
+ *
+ * Where the visitor's details come from is decided by `prefill`:
+ *  - "parent": embedded in ContactSales.astro right after step 1. The
+ *    surrounding Alpine scope exposes `lead` (name, e-mail, club) and the
+ *    wizard starts at the first question.
+ *  - "url": the stand-alone /start page. Details come from the query string
+ *    (?email=&name=&club=). Without an e-mail the wizard adds a "who are you"
+ *    step in front, so the page is always usable.
+ */
+import {
+  CHECKIN_FREQUENCY,
+  MAX_THEMES,
+  ONBOARDING_FORM_NAME,
+  TEAM_SIZE,
+  getOnboardingCopy,
+} from "@/lib/onboarding";
+
+interface Props {
+  prefill: "parent" | "url";
+}
+
+const { prefill } = Astro.props;
+
+const lang = Astro.currentLocale ?? "nl";
+const t = getOnboardingCopy(lang);
+
+const init =
+  prefill === "parent"
+    ? "begin({ source: 'contact', name: lead.name, email: lead.email, club: lead.club })"
+    : "begin(fromUrl())";
+
+// Strings the template has to interpolate at runtime. JSON.stringify gives a
+// safely quoted JS literal for use inside Alpine expressions.
+const progressTemplate = JSON.stringify(t.progress);
+const themesCountTemplate = JSON.stringify(t.themesCount);
+
+const wizard = `{
+  source: 'link',
+  locale: ${JSON.stringify(lang)},
+  name: '',
+  email: '',
+  club: '',
+  teamName: '',
+  ageGroup: '',
+  teamSize: 15,
+  frequency: 2,
+  themes: [],
+  themesOther: '',
+  outcome: '',
+  outcomeOther: '',
+  startChoice: '',
+  startDate: '',
+  steps: [],
+  index: 0,
+  sending: false,
+  error: false,
+  submitted: false,
+  maxThemes: ${MAX_THEMES},
+  today: new Date().toISOString().slice(0, 10),
+
+  fromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    return {
+      source: 'link',
+      name: params.get('name') ?? '',
+      email: params.get('email') ?? '',
+      club: params.get('club') ?? ''
+    };
+  },
+  begin(prefill) {
+    this.source = prefill.source ?? 'link';
+    this.name = (prefill.name ?? '').trim();
+    this.email = (prefill.email ?? '').trim();
+    this.club = (prefill.club ?? '').trim();
+    const questions = ['team', 'size', 'frequency', 'themes', 'outcome', 'start'];
+    this.steps = this.email ? questions : ['identity', ...questions];
+    this.index = 0;
+  },
+  editIdentity() {
+    if (!this.steps.includes('identity')) this.steps.unshift('identity');
+    this.index = 0;
+  },
+
+  get current() { return this.steps[this.index]; },
+  get total() { return this.steps.length; },
+  get isLast() { return this.index === this.steps.length - 1; },
+  get progressText() {
+    return ${progressTemplate}.replace('{current}', this.index + 1).replace('{total}', this.total);
+  },
+  get progressWidth() {
+    return this.total ? 'width: ' + Math.round(((this.index + 1) / this.total) * 100) + '%' : 'width: 0%';
+  },
+  get sizeLabel() { return this.teamSize >= ${TEAM_SIZE.max} ? '${TEAM_SIZE.max}+' : String(this.teamSize); },
+  get frequencyLabel() {
+    return this.frequency >= ${CHECKIN_FREQUENCY.max} ? '${CHECKIN_FREQUENCY.max}+' : String(this.frequency);
+  },
+  get themesCountText() {
+    return ${themesCountTemplate}.replace('{count}', this.themes.length).replace('{max}', this.maxThemes);
+  },
+
+  hasTheme(value) { return this.themes.includes(value); },
+  themeDisabled(value) { return !this.hasTheme(value) && this.themes.length >= this.maxThemes; },
+  toggleTheme(value) {
+    if (this.hasTheme(value)) {
+      this.themes = this.themes.filter((theme) => theme !== value);
+    } else if (this.themes.length < this.maxThemes) {
+      this.themes = [...this.themes, value];
+    }
+  },
+
+  get canProceed() {
+    switch (this.current) {
+      case 'identity':
+        return this.name.trim().length > 0 && this.email.trim().length > 0;
+      case 'team':
+        return this.teamName.trim().length > 0 && this.ageGroup !== '';
+      case 'size':
+      case 'frequency':
+        return true;
+      case 'themes':
+        return this.themes.length > 0 && (!this.hasTheme('anders') || this.themesOther.trim().length > 0);
+      case 'outcome':
+        return this.outcome !== '' && (this.outcome !== 'anders' || this.outcomeOther.trim().length > 0);
+      case 'start':
+        return this.startChoice !== '' && (this.startChoice !== 'datum' || this.startDate !== '');
+    }
+    return false;
+  },
+
+  back() {
+    if (this.index === 0) return;
+    this.index--;
+    this.error = false;
+    this.revealTop();
+  },
+  next() {
+    if (!this.canProceed || this.sending) return;
+    if (this.isLast) return this.submit();
+    this.index++;
+    this.error = false;
+    this.revealTop();
+  },
+  revealTop() {
+    this.$nextTick(() => {
+      if (this.$root.getBoundingClientRect().top < 0) {
+        this.$root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  },
+
+  async submit() {
+    if (this.sending) return;
+    this.sending = true;
+    this.error = false;
+    const body = new URLSearchParams({
+      'form-name': ${JSON.stringify(ONBOARDING_FORM_NAME)},
+      'bot-field': '',
+      source: this.source,
+      locale: this.locale,
+      name: this.name,
+      email: this.email,
+      club: this.club,
+      team_name: this.teamName,
+      age_group: this.ageGroup,
+      team_size: this.sizeLabel,
+      checkin_frequency: this.frequencyLabel,
+      themes: this.themes.join(', '),
+      themes_other: this.hasTheme('anders') ? this.themesOther : '',
+      first_outcome: this.outcome,
+      first_outcome_other: this.outcome === 'anders' ? this.outcomeOther : '',
+      start: this.startChoice,
+      start_date: this.startChoice === 'datum' ? this.startDate : ''
+    });
+    try {
+      const res = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body.toString()
+      });
+      if (!res.ok) throw new Error('Submission failed');
+      this.submitted = true;
+      this.revealTop();
+    } catch {
+      this.error = true;
+    } finally {
+      this.sending = false;
+    }
+  }
+}`;
+
+const inputClass =
+  "text-zinc-800 cursor-text px-4 py-4 w-full h-14 min-h-[3.50rem] border-2 border-black border-solid rounded-md m-0";
+const optionClass =
+  "w-full text-left px-4 py-3.5 border-2 border-black rounded-md text-base font-semibold transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 disabled:opacity-40 disabled:cursor-not-allowed";
+const optionSelected = "bg-black text-white";
+const optionIdle = "bg-white text-black hover:bg-gray-50";
+---
+
+<div x-data={wizard} x-init={init} class="w-full scroll-mt-28">
+  <!-- ─── Done state ──────────────────────────────────────────────────── -->
+  <div x-show="submitted" x-cloak class="py-24 flex flex-col items-center text-center">
+    <div class="flex items-center justify-center w-16 h-16 bg-black rounded-full mb-8">
+      <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+      </svg>
+    </div>
+    <h2 class="text-4xl md:text-[3.13rem] leading-none font-semibold my-1">{t.doneTitle}</h2>
+    <p class="mt-6 text-lg text-gray-600 max-w-md">{t.doneMessage}</p>
+  </div>
+
+  <!-- ─── Questionnaire ───────────────────────────────────────────────── -->
+  <div x-show="!submitted">
+    <div class="items-center text-sm font-medium justify-center flex">
+      <h2 class="text-4xl md:text-[3.13rem] leading-none font-semibold my-1 text-center" x-text={`source === 'link' ? ${JSON.stringify(t.headingLinked)} : ${JSON.stringify(t.heading)}`}>
+        {t.heading}
+      </h2>
+    </div>
+    <p class="mb-1 mt-10 text-gray-700" x-text={`source === 'link' ? ${JSON.stringify(t.introLinked)} : ${JSON.stringify(t.intro)}`}>{t.intro}</p>
+
+    <!-- Who this is for (when the e-mail is already known) -->
+    <p x-show="email && current !== 'identity'" x-cloak class="mt-3 text-sm text-gray-500">
+      <span x-text="email"></span>
+      <button type="button" class="underline ml-2 hover:text-black" @click="editIdentity()">
+        {t.notYou}
+      </button>
+    </p>
+
+    <!-- Progress -->
+    <div class="mt-8" x-show="total > 0" x-cloak>
+      <p class="text-sm font-semibold text-gray-600" x-text="progressText" aria-live="polite"></p>
+      <div class="mt-2 h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
+        <div class="h-full bg-black rounded-full transition-all duration-300" :style="progressWidth"></div>
+      </div>
+    </div>
+
+    <form @submit.prevent="next()" class="mt-8">
+      <!-- ── Identity (only when the e-mail is not known yet) ─────── -->
+      <template x-if="current === 'identity'">
+        <fieldset class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+          <legend class="text-2xl font-semibold mb-6 sm:col-span-2">{t.identityTitle}</legend>
+          <div class="text-base">
+            <label class="block text-black font-semibold max-w-full mb-3" for="onboarding-name">{t.nameLabel}</label>
+            <input id="onboarding-name" type="text" x-model="name" required autocomplete="name" placeholder={t.namePlaceholder} class={inputClass} />
+          </div>
+          <div class="text-base">
+            <label class="block text-black font-semibold max-w-full mb-3" for="onboarding-email">{t.emailLabel}</label>
+            <input id="onboarding-email" type="email" x-model="email" required autocomplete="email" placeholder={t.emailPlaceholder} class={inputClass} />
+          </div>
+          <div class="text-base sm:col-span-2">
+            <label class="block text-black font-semibold max-w-full mb-3" for="onboarding-club">
+              {t.clubLabel} <span class="text-gray-500 font-normal">({t.optional})</span>
+            </label>
+            <input id="onboarding-club" type="text" x-model="club" autocomplete="organization" placeholder={t.clubPlaceholder} class={inputClass} />
+          </div>
+        </fieldset>
+      </template>
+
+      <!-- ── Question: team name + age group ─────────────────────── -->
+      <template x-if="current === 'team'">
+        <fieldset class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+          <legend class="text-2xl font-semibold mb-6 sm:col-span-2">{t.teamTitle}</legend>
+          <div class="text-base">
+            <label class="block text-black font-semibold max-w-full mb-3" for="onboarding-team-name">{t.teamNameLabel}</label>
+            <input id="onboarding-team-name" type="text" x-model="teamName" required placeholder={t.teamNamePlaceholder} class={inputClass} />
+          </div>
+          <div class="text-base">
+            <label class="block text-black font-semibold max-w-full mb-3" for="onboarding-age-group">{t.ageGroupLabel}</label>
+            <select
+              id="onboarding-age-group"
+              x-model="ageGroup"
+              required
+              class="text-zinc-800 cursor-pointer px-4 py-4 w-full h-14 min-h-[3.50rem] border-2 border-black border-solid rounded-md m-0 bg-white"
+            >
+              <option value="">{t.ageGroupPlaceholder}</option>
+              {t.ageGroups.map((group) => <option value={group.value}>{group.label}</option>)}
+            </select>
+          </div>
+        </fieldset>
+      </template>
+
+      <!-- ── Question: team size ─────────────────────────────────── -->
+      <template x-if="current === 'size'">
+        <fieldset>
+          <legend class="text-2xl font-semibold mb-2">{t.sizeTitle}</legend>
+          <p class="text-gray-600 mb-8">{t.sizeHint}</p>
+          <div class="flex items-baseline gap-3 mb-6">
+            <span class="text-6xl font-semibold leading-none tabular-nums" x-text="sizeLabel" aria-live="polite"></span>
+            <span class="text-xl text-gray-600">{t.sizeUnit}</span>
+          </div>
+          <input
+            type="range"
+            x-model.number="teamSize"
+            min={TEAM_SIZE.min}
+            max={TEAM_SIZE.max}
+            step="1"
+            aria-label={t.sizeTitle}
+            class="w-full h-2 cursor-pointer accent-black"
+          />
+          <div class="flex justify-between text-sm text-gray-500 mt-2">
+            <span>{TEAM_SIZE.min}</span>
+            <span>{TEAM_SIZE.max}+</span>
+          </div>
+        </fieldset>
+      </template>
+
+      <!-- ── Question: check-in frequency ────────────────────────── -->
+      <template x-if="current === 'frequency'">
+        <fieldset>
+          <legend class="text-2xl font-semibold mb-2">{t.frequencyTitle}</legend>
+          <p class="text-gray-600 mb-8">{t.frequencyHint}</p>
+          <div class="flex items-baseline gap-3 mb-6">
+            <span class="text-6xl font-semibold leading-none tabular-nums" x-text="frequencyLabel" aria-live="polite"></span>
+            <span class="text-xl text-gray-600">{t.frequencyUnit}</span>
+          </div>
+          <input
+            type="range"
+            x-model.number="frequency"
+            min={CHECKIN_FREQUENCY.min}
+            max={CHECKIN_FREQUENCY.max}
+            step="1"
+            list="onboarding-frequency-ticks"
+            aria-label={t.frequencyTitle}
+            class="w-full h-2 cursor-pointer accent-black"
+          />
+          <datalist id="onboarding-frequency-ticks">
+            {Array.from({ length: CHECKIN_FREQUENCY.max }, (_, i) => <option value={i + 1}></option>)}
+          </datalist>
+          <div class="flex justify-between text-sm font-semibold text-gray-500 mt-2 px-1">
+            {Array.from({ length: CHECKIN_FREQUENCY.max }, (_, i) => (
+              <span :class={`frequency === ${i + 1} && 'text-black'`}>{i + 1 === CHECKIN_FREQUENCY.max ? `${i + 1}+` : i + 1}</span>
+            ))}
+          </div>
+        </fieldset>
+      </template>
+
+      <!-- ── Question: themes (2–3, max 3) ───────────────────────── -->
+      <template x-if="current === 'themes'">
+        <fieldset>
+          <legend class="text-2xl font-semibold mb-2">{t.themesTitle}</legend>
+          <div class="flex flex-wrap items-baseline justify-between gap-2 mb-6">
+            <p class="text-gray-600">{t.themesHint}</p>
+            <p class="text-sm font-semibold tabular-nums" :class="themes.length >= maxThemes ? 'text-black' : 'text-gray-500'" x-text="themesCountText" aria-live="polite"></p>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {t.themes.map((theme) => (
+              <button
+                type="button"
+                @click={`toggleTheme('${theme.value}')`}
+                :aria-pressed={`hasTheme('${theme.value}')`}
+                :disabled={`themeDisabled('${theme.value}')`}
+                :class={`hasTheme('${theme.value}') ? '${optionSelected}' : '${optionIdle}'`}
+                class={optionClass}
+              >
+                {theme.label}
+              </button>
+            ))}
+          </div>
+          <p x-show="themes.length === 1" x-cloak class="mt-4 text-sm text-gray-600">{t.themesNudge}</p>
+          <div x-show="hasTheme('anders')" x-cloak class="mt-6 text-base">
+            <input type="text" x-model="themesOther" :required="hasTheme('anders')" placeholder={t.themesOtherPlaceholder} aria-label={t.themesOtherPlaceholder} class={inputClass} />
+          </div>
+        </fieldset>
+      </template>
+
+      <!-- ── Question: first outcome (single choice) ─────────────── -->
+      <template x-if="current === 'outcome'">
+        <fieldset>
+          <legend class="text-2xl font-semibold mb-2">{t.outcomeTitle}</legend>
+          <p class="text-gray-600 mb-6">{t.outcomeHint}</p>
+          <div class="grid grid-cols-1 gap-3" role="radiogroup">
+            {t.outcomes.map((option) => (
+              <button
+                type="button"
+                role="radio"
+                @click={`outcome = '${option.value}'`}
+                :aria-checked={`outcome === '${option.value}'`}
+                :class={`outcome === '${option.value}' ? '${optionSelected}' : '${optionIdle}'`}
+                class={optionClass}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+          <div x-show="outcome === 'anders'" x-cloak class="mt-6 text-base">
+            <input type="text" x-model="outcomeOther" :required="outcome === 'anders'" placeholder={t.outcomeOtherPlaceholder} aria-label={t.outcomeOtherPlaceholder} class={inputClass} />
+          </div>
+        </fieldset>
+      </template>
+
+      <!-- ── Question: start moment ──────────────────────────────── -->
+      <template x-if="current === 'start'">
+        <fieldset>
+          <legend class="text-2xl font-semibold mb-6">{t.startTitle}</legend>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" role="radiogroup">
+            {t.starts.map((option) => (
+              <button
+                type="button"
+                role="radio"
+                @click={`startChoice = '${option.value}'`}
+                :aria-checked={`startChoice === '${option.value}'`}
+                :class={`startChoice === '${option.value}' ? '${optionSelected}' : '${optionIdle}'`}
+                class={optionClass}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+          <div x-show="startChoice === 'datum'" x-cloak class="mt-6 text-base">
+            <label class="block text-black font-semibold max-w-full mb-3" for="onboarding-start-date">{t.startDateLabel}</label>
+            <input id="onboarding-start-date" type="date" x-model="startDate" :min="today" :required="startChoice === 'datum'" class={inputClass} />
+          </div>
+        </fieldset>
+      </template>
+
+      <!-- ── Navigation ──────────────────────────────────────────── -->
+      <div class="mt-10 flex flex-wrap items-center gap-4">
+        <button
+          type="button"
+          x-show="index > 0"
+          x-cloak
+          @click="back()"
+          :disabled="sending"
+          class="px-6 py-2.5 text-xl font-semibold text-black border-2 border-black rounded-md bg-white hover:bg-gray-50 transition-colors duration-150 disabled:opacity-60"
+        >
+          {t.back}
+        </button>
+        <button
+          type="submit"
+          :disabled="!canProceed || sending"
+          class="button-primary bg-black text-white items-center justify-center py-2.5 px-6 text-center inline-flex max-w-full rounded-md font-semibold text-xl disabled:opacity-40 disabled:cursor-not-allowed"
+        >
+          <span x-show="!sending" x-text={`isLast ? ${JSON.stringify(t.finish)} : ${JSON.stringify(t.next)}`}>{t.next}</span>
+          <span x-show="sending" x-cloak>{t.sending}</span>
+        </button>
+      </div>
+      <p x-show="error" x-cloak class="mt-4 text-red-600 font-semibold" role="alert">{t.error}</p>
+    </form>
+  </div>
+</div>
+
+<style>
+  .button-primary {
+    transition: opacity 0.2s;
+  }
+  .button-primary:hover:not(:disabled) {
+    opacity: 0.85;
+  }
+</style>
+
+<style is:global>
+  [x-cloak] {
+    display: none !important;
+  }
+</style>

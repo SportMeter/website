@@ -45,7 +45,10 @@ export default defineConfig({
       // Base style is applied on the file global.css
       applyBaseStyles: false,
     }),
-    sitemap(),
+    sitemap({
+      // /start is reached through a personal link, not through search.
+      filter: (page) => !/\/start\/?$/.test(new URL(page).pathname),
+    }),
     icon(),
     react(),
     markdoc(),

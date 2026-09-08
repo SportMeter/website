@@ -623,6 +623,13 @@ export default config({
               icon: ContactIcon({ ariaHidden: true }),
               schema: {},
             }),
+            ContactOnboarding: block({
+              label: "Onboarding questionnaire",
+              description:
+                "Stand-alone onboarding questionnaire (/start), pre-filled from ?email= for people signed up by someone else — locale-aware, no config needed",
+              icon: ContactIcon({ ariaHidden: true }),
+              schema: {},
+            }),
             Contact: block({
               label: "Contact",
               description: "Contact form section",

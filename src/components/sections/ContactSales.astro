@@ -7,10 +7,23 @@
  * - Conditional fields based on toggle selection
  * - Netlify Forms (AJAX submission so we can show a thank-you state inline)
  * - Locale-aware text via Astro.currentLocale
+ * - "Myself": after step 1 the onboarding questionnaire (OnboardingWizard)
+ *   follows inline, so the visitor keeps going without a page change.
+ * - "Someone from my club": we only take the sign-up. The person signed up
+ *   fills in the questionnaire themselves through a personal /start link,
+ *   which is shown to the submitter and included in the form submission.
  */
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { ONBOARDING_PATH } from "@/lib/onboarding";
+import OnboardingFormDefinition from "./OnboardingFormDefinition.astro";
+import OnboardingWizard from "./OnboardingWizard.astro";
 
 const lang = Astro.currentLocale ?? "nl";
 const isEN = lang === "en";
+
+// Path of the stand-alone questionnaire in the visitor's language; the browser
+// prefixes its own origin so the link is right on every deployment.
+const onboardingPath = getRelativeLocaleUrl(lang, ONBOARDING_PATH);
 
 const t = {
   heading: isEN ? "Ready to join?" : "Klaar om mee te doen?",
@@ -45,6 +58,7 @@ const t = {
   otherEmailPlaceholder: isEN ? "their@email.com" : "hun@email.com",
 
   submitLabel: isEN ? "Submit" : "Verzenden",
+  nextLabel: isEN ? "Next" : "Volgende",
   sendingLabel: isEN ? "Sending..." : "Verzenden...",
 
   errorMessage: isEN
@@ -57,30 +71,64 @@ const t = {
 
   thankYouTitle: isEN ? "Thank you!" : "Bedankt!",
   thankYouMessage: isEN
-    ? "We've received your message and will be in touch as soon as possible."
-    : "We hebben je bericht ontvangen en nemen zo snel mogelijk contact met je op.",
+    ? "We've received your sign-up. Share the link below with the person you signed up: with it they answer a few short questions themselves, so we can set up their account ahead of time."
+    : "We hebben je aanmelding ontvangen. Deel de link hieronder met de persoon die je hebt aangemeld: daarmee beantwoordt diegene zelf een paar korte vragen, zodat we het account alvast kunnen klaarzetten.",
+  shareLinkLabel: isEN ? "Personal link for" : "Persoonlijke link voor",
+  copyLabel: isEN ? "Copy link" : "Link kopiëren",
+  copiedLabel: isEN ? "Copied!" : "Gekopieerd!",
 };
 ---
 
 <div
   class="items-center gap-x-[6.25rem] pb-20 md:pb-40 auto-cols-fr justify-center flex"
+  data-onboarding-path={onboardingPath}
   x-data="{
     mode: 'self',
-    submitted: false,
+    stage: 'form',
     sending: false,
     error: false,
+    lead: { name: '', email: '', club: '' },
+    otherEmail: '',
+    shareLink: '',
+    copied: false,
+    buildShareLink(email, club) {
+      const params = new URLSearchParams({ email });
+      if (club) params.set('club', club);
+      return window.location.origin + this.$root.dataset.onboardingPath + '?' + params.toString();
+    },
+    async copyShareLink() {
+      try {
+        await navigator.clipboard.writeText(this.shareLink);
+        this.copied = true;
+        setTimeout(() => { this.copied = false; }, 2000);
+      } catch {
+        this.$refs.shareLink?.select();
+      }
+    },
     async submit(form) {
       if (this.sending) return;
       this.sending = true;
       this.error = false;
+      const data = new FormData(form);
+      this.lead = {
+        name: String(data.get('name') ?? ''),
+        email: String(data.get('email') ?? ''),
+        club: String(data.get('club') ?? '')
+      };
+      if (this.mode === 'other') {
+        this.otherEmail = String(data.get('other_email') ?? '');
+        this.shareLink = this.buildShareLink(this.otherEmail, this.lead.club);
+        data.set('onboarding_link', this.shareLink);
+      }
       try {
         const res = await fetch('/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(new FormData(form)).toString()
+          body: new URLSearchParams(data).toString()
         });
         if (!res.ok) throw new Error('Submission failed');
-        this.submitted = true;
+        this.stage = this.mode === 'self' ? 'onboarding' : 'thanks';
+        this.$nextTick(() => this.$root.scrollIntoView({ behavior: 'smooth', block: 'start' }));
       } catch {
         this.error = true;
       } finally {
@@ -91,8 +139,8 @@ const t = {
 >
   <div class="col-span-1 row-span-1 w-full max-w-3xl">
 
-    <!-- ─── Thank-you state ─────────────────────────────────────────────── -->
-    <div x-show="submitted" x-cloak class="py-24 flex flex-col items-center text-center">
+    <!-- ─── Thank-you state ("someone from my club") ────────────────────── -->
+    <div x-show="stage === 'thanks'" x-cloak class="py-24 flex flex-col items-center text-center">
       <div class="flex items-center justify-center w-16 h-16 bg-black rounded-full mb-8">
         <svg
           class="w-8 h-8 text-white"
@@ -106,11 +154,44 @@ const t = {
         </svg>
       </div>
       <h2 class="text-4xl md:text-[3.13rem] leading-none font-semibold my-1">{t.thankYouTitle}</h2>
-      <p class="mt-6 text-lg text-gray-600 max-w-md">{t.thankYouMessage}</p>
+      <p class="mt-6 text-lg text-gray-600 max-w-xl">{t.thankYouMessage}</p>
+
+      <!-- Personal questionnaire link for the person who was signed up -->
+      <div class="mt-10 w-full max-w-xl text-left">
+        <p class="text-black font-semibold mb-3">
+          {t.shareLinkLabel} <span x-text="otherEmail"></span>
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <input
+            type="text"
+            readonly
+            x-ref="shareLink"
+            :value="shareLink"
+            @focus="$el.select()"
+            aria-label={t.shareLinkLabel}
+            class="text-zinc-800 px-4 py-4 w-full h-14 min-h-[3.50rem] border-2 border-black border-solid rounded-md m-0 bg-gray-50 text-sm sm:text-base"
+          />
+          <button
+            type="button"
+            @click="copyShareLink()"
+            class="button-primary bg-black text-white items-center justify-center py-2.5 px-6 text-center inline-flex rounded-md font-semibold text-lg whitespace-nowrap"
+          >
+            <span x-show="!copied">{t.copyLabel}</span>
+            <span x-show="copied" x-cloak>{t.copiedLabel}</span>
+          </button>
+        </div>
+      </div>
     </div>
 
+    <!-- ─── Onboarding questionnaire ("myself", after step 1) ───────────── -->
+    <template x-if="stage === 'onboarding'">
+      <div>
+        <OnboardingWizard prefill="parent" />
+      </div>
+    </template>
+
     <!-- ─── Form state ──────────────────────────────────────────────────── -->
-    <div x-show="!submitted">
+    <div x-show="stage === 'form'">
 
       <!-- Heading -->
       <div class="items-center text-sm font-medium justify-center flex">
@@ -162,6 +243,8 @@ const t = {
         <input type="hidden" name="form-name" value="contact-sales" />
         <!-- Passes the selected mode as a hidden field -->
         <input type="hidden" name="type" :value="mode" />
+        <!-- "Someone from my club": personal questionnaire link for that person, filled in on submit -->
+        <input type="hidden" name="onboarding_link" value="" />
 
         <!-- ── Shared fields ─────────────────────────────── -->
 
@@ -252,7 +335,7 @@ const t = {
             :disabled="sending"
             class="button-primary bg-black text-white items-center justify-center py-2.5 px-6 text-center inline-flex max-w-full rounded-md font-semibold text-xl disabled:opacity-60 disabled:cursor-wait"
           >
-            <span x-show="!sending">{t.submitLabel}</span>
+            <span x-show="!sending" x-text={`mode === 'self' ? ${JSON.stringify(t.nextLabel)} : ${JSON.stringify(t.submitLabel)}`}>{t.nextLabel}</span>
             <span x-show="sending" x-cloak>{t.sendingLabel}</span>
           </button>
           <p x-show="error" x-cloak class="mt-4 text-red-600 font-semibold" role="alert">
@@ -265,6 +348,9 @@ const t = {
     </div>
   </div>
 </div>
+
+<!-- Static definition so Netlify registers the contact-onboarding form and its fields -->
+<OnboardingFormDefinition />
 
 <style>
   /* Match the existing button transition from Link.astro */

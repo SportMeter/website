@@ -1,0 +1,23 @@
+---
+/**
+ * ContactOnboarding.astro
+ *
+ * Stand-alone page section for the onboarding questionnaire (/start).
+ *
+ * People land here through a link that someone else created for them on the
+ * contact page: /start?email=their@email.com&club=... The wizard reads those
+ * query parameters and skips the "who are you" step when the e-mail is known.
+ * Without parameters the questionnaire still works; it then asks for name and
+ * e-mail first.
+ */
+import OnboardingFormDefinition from "./OnboardingFormDefinition.astro";
+import OnboardingWizard from "./OnboardingWizard.astro";
+---
+
+<div class="items-center gap-x-[6.25rem] pt-16 md:pt-28 pb-20 md:pb-40 auto-cols-fr justify-center flex">
+  <div class="col-span-1 row-span-1 w-full max-w-3xl">
+    <OnboardingWizard prefill="url" />
+  </div>
+</div>
+
+<OnboardingFormDefinition />

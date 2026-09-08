@@ -1,0 +1,20 @@
+---
+/**
+ * OnboardingFormDefinition.astro
+ *
+ * Netlify Forms only accepts fields that appear in a form definition in the
+ * deployed HTML. The onboarding wizard renders its questions with Alpine and
+ * posts its answers with fetch(), so this hidden form is what Netlify's build
+ * step actually reads. Keep its field list in sync with ONBOARDING_FIELDS.
+ *
+ * Render this once per page that hosts the wizard, outside any Alpine
+ * <template>, so that it is present in the static HTML.
+ */
+import { ONBOARDING_FIELDS, ONBOARDING_FORM_NAME } from "@/lib/onboarding";
+---
+
+<form name={ONBOARDING_FORM_NAME} data-netlify="true" data-netlify-honeypot="bot-field" hidden aria-hidden="true">
+  <input type="hidden" name="form-name" value={ONBOARDING_FORM_NAME} />
+  <input type="hidden" name="bot-field" />
+  {ONBOARDING_FIELDS.map((field) => <input type="text" name={field} />)}
+</form>
